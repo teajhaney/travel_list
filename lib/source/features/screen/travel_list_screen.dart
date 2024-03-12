@@ -10,6 +10,6 @@ class TravelListScreen extends StatefulWidget {
 class _TravelListScreenState extends State<TravelListScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Scaffold();
   }
 }
