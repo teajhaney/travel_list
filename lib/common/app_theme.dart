@@ -19,7 +19,6 @@ class AppTheme {
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
     useMaterial3: true,
     swapLegacyOnMaterial3: true,
-    fontFamily: GoogleFonts.notoSans().fontFamily,
   ).copyWith(
     textTheme: GoogleFonts.urbanistTextTheme(
       ThemeData.light().textTheme,
@@ -42,14 +41,13 @@ class AppTheme {
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
     useMaterial3: true,
     swapLegacyOnMaterial3: true,
-    fontFamily: GoogleFonts.notoSans().fontFamily,
   ).copyWith(
-    scaffoldBackgroundColor: const Color.fromARGB(255, 8, 9, 12),
-    appBarTheme: const AppBarTheme().copyWith(
-      backgroundColor: Colors.transparent,
-      // iconTheme: const IconThemeData(opacity: 1),
-      // titleTextStyle: const TextStyle(color: Colors.white, fontSize: 25)
-    ),
+    // scaffoldBackgroundColor: const Color.fromARGB(255, 8, 9, 12),
+    // appBarTheme: const AppBarTheme().copyWith(
+    //   backgroundColor: Colors.transparent,
+    //   // iconTheme: const IconThemeData(opacity: 1),
+    //   // titleTextStyle: const TextStyle(color: Colors.white, fontSize: 25)
+    // ),
     textTheme: GoogleFonts.urbanistTextTheme(
       ThemeData.dark().textTheme,
     ),
