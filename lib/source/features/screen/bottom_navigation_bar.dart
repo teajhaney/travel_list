@@ -34,20 +34,19 @@ class _ButtomNavigationBarState extends State<ButtomNavigationBar>
         bottomNavigationBar: SizedBox(
           height: n70,
           child: BottomNavigationBar(
-              items: _icons
-                  .map((title, icon) => MapEntry(
-                      title,
-                      BottomNavigationBarItem(
-                        icon: Icon(icon, size: n30),
-                        label: title,
-                      )))
-                  .values
-                  .toList(),
-              currentIndex: _currentIndex,
-              // selectedItemColor: Theme.of(context).colorScheme.primary,
-              showUnselectedLabels: true,
-              // unselectedItemColor: Theme.of(context).colorScheme.background,
-              onTap: (index) => setState(() => _currentIndex = index)),
+            items: _icons
+                .map((title, icon) => MapEntry(
+                    title,
+                    BottomNavigationBarItem(
+                      icon: Icon(icon, size: n30),
+                      label: title,
+                    )))
+                .values
+                .toList(),
+            fixedColor: Theme.of(context).colorScheme.primaryContainer,
+            currentIndex: _currentIndex,
+            onTap: (index) => setState(() => _currentIndex = index),
+          ),
         ),
       ),
     );

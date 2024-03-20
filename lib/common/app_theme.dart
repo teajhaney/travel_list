@@ -19,13 +19,14 @@ class AppTheme {
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
     useMaterial3: true,
     swapLegacyOnMaterial3: true,
-  ).copyWith(
-    textTheme: GoogleFonts.urbanistTextTheme(
-      ThemeData.light().textTheme,
-    ),
-    primaryTextTheme: GoogleFonts.urbanistTextTheme(
-      ThemeData.light().primaryTextTheme,
-    ),
+    // )
+    // .copyWith(
+    //   textTheme: GoogleFonts.urbanistTextTheme(
+    //     ThemeData.light().textTheme,
+    //   ),
+    //   primaryTextTheme: GoogleFonts.urbanistTextTheme(
+    //     ThemeData.light().primaryTextTheme,
+    //   ),
   );
   static ThemeData dark = FlexThemeData.dark(
     scheme: FlexScheme.indigo,
@@ -41,18 +42,18 @@ class AppTheme {
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
     useMaterial3: true,
     swapLegacyOnMaterial3: true,
-  ).copyWith(
-    // scaffoldBackgroundColor: const Color.fromARGB(255, 8, 9, 12),
-    // appBarTheme: const AppBarTheme().copyWith(
-    //   backgroundColor: Colors.transparent,
-    //   // iconTheme: const IconThemeData(opacity: 1),
-    //   // titleTextStyle: const TextStyle(color: Colors.white, fontSize: 25)
-    // ),
-    textTheme: GoogleFonts.urbanistTextTheme(
-      ThemeData.dark().textTheme,
-    ),
-    primaryTextTheme: GoogleFonts.urbanistTextTheme(
-      ThemeData.dark().primaryTextTheme,
-    ),
+    // ).copyWith(
+    //   // scaffoldBackgroundColor: const Color.fromARGB(255, 8, 9, 12),
+    //   // appBarTheme: const AppBarTheme().copyWith(
+    //   //   backgroundColor: Colors.transparent,
+    //   //   // iconTheme: const IconThemeData(opacity: 1),
+    //   //   // titleTextStyle: const TextStyle(color: Colors.white, fontSize: 25)
+    //   // ),
+    //   textTheme: GoogleFonts.urbanistTextTheme(
+    //     ThemeData.dark().textTheme,
+    //   ),
+    //   primaryTextTheme: GoogleFonts.urbanistTextTheme(
+    //     ThemeData.dark().primaryTextTheme,
+    //   ),
   );
 }
