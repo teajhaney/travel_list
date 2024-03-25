@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:travel_list/common/common_export.dart';
 import 'package:gap/gap.dart';
+import 'package:travel_list/main.dart';
 import 'package:travel_list/router/app_routes.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -15,7 +17,32 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final bool _isLoading = false;
+  bool _isLoading = false;
+  Future<void> _signIn() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      await supabase.auth.signInWithPassword(
+          password: _passwordController.text.trim(),
+          email: _emailController.text.trim());
+      if (!mounted) return;
+      context.goNamed(AppRoutes.buttomNavigation.name);
+    } on AuthException catch (error) {
+      if (!mounted) return;
+      showSnackBar(context, error.message);
+    } catch (error) {
+      if (!mounted) return;
+      showSnackBar(context, 'Unexpected error occured, try again later');
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -62,8 +89,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       Center(
                           child: FillButton(
                         isLoadind: !_isLoading,
-                        onPressed: () =>
-                            context.goNamed(AppRoutes.buttomNavigation.name),
+                        onPressed: _signIn,
                         label: signIn,
                       )),
                       const Gap(n20),

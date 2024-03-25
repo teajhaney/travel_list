@@ -4,13 +4,14 @@ import './router/router.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() async {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
-    url: 'https://rtorfvuzocvotxbxwmsu.supabase.co',
+    url: 'https://chpobhtorvywobukvkmb.supabase.co',
     anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ0b3JmdnV6b2N2b3R4Ynh3bXN1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTA5MzYzMzgsImV4cCI6MjAyNjUxMjMzOH0.0qnU4zNrhszkLmhgfBiXHKmuEUSHtJpi321vhd1zOMo',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNocG9iaHRvcnZ5d29idWt2a21iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTEyMDA0NDksImV4cCI6MjAyNjc3NjQ0OX0.3bLpFoNQkVCs5p7c_2Z0H4tZwQJhcf3eva7_CTvVIX4',
   );
+  runApp(const MyApp());
 }
 
 final supabase = Supabase.instance.client;
