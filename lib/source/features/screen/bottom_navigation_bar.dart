@@ -17,7 +17,7 @@ class _ButtomNavigationBarState extends State<ButtomNavigationBar>
     TravelListScreen(),
     ProfileScreen(),
   ];
-  final Map<String, IconData> _icons = const {
+  final Map<String, IconData> _icons = {
     '': Icons.list,
     ' ': Icons.person,
   };

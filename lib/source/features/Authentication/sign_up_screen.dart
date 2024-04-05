@@ -33,7 +33,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       context.goNamed(AppRoutes.buttomNavigation.name);
     } on AuthException catch (error) {
       if (!mounted) return;
-      print(error.message);
       showSnackBar(context, error.message);
     } catch (error) {
       if (!mounted) return;
