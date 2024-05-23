@@ -64,13 +64,13 @@ class FillButton extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       child: FilledButton(
           style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(isLoadind
+              backgroundColor: WidgetStateProperty.all(isLoadind
                   ? Theme.of(context).colorScheme.primary
-                  : Theme.of(context).colorScheme.background),
-              foregroundColor: MaterialStateProperty.all<Color>(
+                  : Theme.of(context).colorScheme.surface),
+              foregroundColor: WidgetStateProperty.all<Color>(
                 Theme.of(context).colorScheme.onPrimary,
               ),
-              shape: MaterialStateProperty.all(
+              shape: WidgetStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(n10),
                 ),

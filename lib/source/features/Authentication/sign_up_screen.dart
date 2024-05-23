@@ -55,59 +55,71 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-            body: Padding(
-                padding: const EdgeInsets.all(n20),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(email),
-                      const Gap(n20),
-                      TextFieldInput(
-                          textEditingController: _emailController,
-                          isPassword: false,
-                          textInputType: TextInputType.emailAddress),
-                      const Gap(n20),
-                      const Text(username),
-                      const Gap(n20),
-                      TextFieldInput(
-                          textEditingController: _emailController,
-                          isPassword: false,
-                          textInputType: TextInputType.emailAddress),
-                      const Gap(n20),
-                      const Text('Password'),
-                      const Gap(n20),
-                      TextFieldInput(
-                          textEditingController: _passwordController,
-                          isPassword: true,
-                          textInputType: TextInputType.text),
-                      const Gap(n20),
-                      Center(
-                          child: FillButton(
-                        isLoadind: !_isLoading,
-                        label: signUp,
-                        onPressed: _signUp,
-                      )),
-                      const Gap(n20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(alreadyHaveAnAccount),
-                          const Gap(n5),
-                          GestureDetector(
-                            onTap: () => context.goNamed(AppRoutes.signIn.name),
-                            child: Text(
-                              signIn,
-                              style: getRegularStyle(
-                                  fontSize: n16,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .primaryContainer),
-                            ),
-                          )
-                        ],
-                      )
-                    ]))));
+        child: Scaffold(body: LayoutBuilder(builder: (context, constraints) {
+      return SingleChildScrollView(
+          child: ConstrainedBox(
+        constraints: BoxConstraints(
+          minHeight: constraints.maxHeight,
+        ),
+        child: IntrinsicHeight(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(n20),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(email),
+                    const Gap(n20),
+                    TextFieldInput(
+                        textEditingController: _emailController,
+                        isPassword: false,
+                        textInputType: TextInputType.emailAddress),
+                    const Gap(n20),
+                    const Text(username),
+                    const Gap(n20),
+                    TextFieldInput(
+                        textEditingController: _emailController,
+                        isPassword: false,
+                        textInputType: TextInputType.emailAddress),
+                    const Gap(n20),
+                    const Text('Password'),
+                    const Gap(n20),
+                    TextFieldInput(
+                        textEditingController: _passwordController,
+                        isPassword: true,
+                        textInputType: TextInputType.text),
+                    const Gap(n20),
+                    Center(
+                        child: FillButton(
+                      isLoadind: !_isLoading,
+                      label: signUp,
+                      onPressed: _signUp,
+                    )),
+                    const Gap(n20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(alreadyHaveAnAccount),
+                        const Gap(n5),
+                        GestureDetector(
+                          onTap: () => context.goNamed(AppRoutes.signIn.name),
+                          child: Text(
+                            signIn,
+                            style: getRegularStyle(
+                                fontSize: n16,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer),
+                          ),
+                        )
+                      ],
+                    )
+                  ]),
+            ),
+          ),
+        ),
+      ));
+    })));
   }
 }
