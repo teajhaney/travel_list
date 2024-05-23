@@ -17,7 +17,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       body: Center(
           child: FillButton(
-        isLoadind: true,
+        isLoading: true,
         label: 'Sign out',
         onPressed: () {
           supabase.auth.signOut();

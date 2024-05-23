@@ -15,10 +15,11 @@ void showSnackBar(BuildContext context, String content) {
 class TextFieldInput extends StatelessWidget {
   final TextEditingController textEditingController;
   final bool isPassword;
-
+  final ValueChanged<String>? onchanged;
   final TextInputType textInputType;
   const TextFieldInput({
     super.key,
+    this.onchanged,
     required this.textEditingController,
     required this.isPassword,
     required this.textInputType,
@@ -32,6 +33,7 @@ class TextFieldInput extends StatelessWidget {
     return TextField(
       keyboardType: textInputType,
       obscureText: isPassword,
+      onChanged: onchanged,
       decoration: InputDecoration(
         filled: true,
         enabledBorder: inputBorder,
@@ -47,12 +49,12 @@ class TextFieldInput extends StatelessWidget {
 //====FILLED BUTTON===
 
 class FillButton extends StatelessWidget {
-  final bool isLoadind;
+  final bool isLoading;
   final String label;
   final VoidCallback onPressed;
   const FillButton({
     super.key,
-    required this.isLoadind,
+    required this.isLoading,
     required this.label,
     required this.onPressed,
   });
@@ -64,7 +66,7 @@ class FillButton extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       child: FilledButton(
           style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(isLoadind
+              backgroundColor: WidgetStateProperty.all(isLoading
                   ? Theme.of(context).colorScheme.primary
                   : Theme.of(context).colorScheme.surface),
               foregroundColor: WidgetStateProperty.all<Color>(

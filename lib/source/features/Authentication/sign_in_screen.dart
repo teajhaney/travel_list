@@ -88,7 +88,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       const Gap(n20),
                       Center(
                           child: FillButton(
-                        isLoadind: !_isLoading,
+                        isLoading: !_isLoading,
                         onPressed: _signIn,
                         label: signIn,
                       )),
