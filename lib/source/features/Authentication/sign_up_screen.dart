@@ -34,7 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     // Regular expression pattern for email validation
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
-    if (emailRegex.hasMatch(value!)) {
+    if (emailRegex.hasMatch(value)) {
       setState(() {
         _isEmailValid = true;
       });
@@ -58,7 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     // Define your password validation rules here
     final passwordRegex =
         RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
-    if (passwordRegex.hasMatch(value!)) {
+    if (passwordRegex.hasMatch(value)) {
       setState(() {
         _isPasswordValid = true;
       });
