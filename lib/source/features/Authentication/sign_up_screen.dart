@@ -38,7 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       setState(() {
         _isEmailValid = true;
       });
-      //   return null;
+
       // Email is valid
     } else {
       setState(() {
@@ -62,13 +62,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
       setState(() {
         _isPasswordValid = true;
       });
-      //   return null;
+
       //password is valid
     } else {
       setState(() {
         _isPasswordValid = false;
       });
-      //   return 'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character';
     }
     return null;
   }
