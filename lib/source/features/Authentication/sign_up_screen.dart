@@ -23,6 +23,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _isPasswordValid = false;
 
   bool _isEmailValid = false;
+//  VALIDATE EMAIL ADDRESS
 
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
@@ -48,6 +49,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return null;
   }
 
+  //  VALIDATE PASSWORD
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       setState(() {
@@ -72,6 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return null;
   }
 
+  // SIGN UP FUNCTION
   Future<void> _signUp() async {
     if (_isEmailValid && _isPasswordValid) {
       try {
@@ -79,14 +82,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
           _isLoading = true;
         });
 
-        await supabase.auth.signUp(
+         await supabase.auth.signUp(
             password: _passwordController.text.trim(),
             email: _emailController.text.trim(),
             data: {'username': _usernameController.text.trim()});
+        
         if (!mounted) return;
         context.goNamed(AppRoutes.buttomNavigation.name);
       } on AuthException catch (error) {
         if (!mounted) return;
+
         showSnackBar(context, error.message);
       } catch (error) {
         if (!mounted) return;

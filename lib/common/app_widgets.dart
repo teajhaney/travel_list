@@ -31,6 +31,7 @@ class TextFieldInput extends StatelessWidget {
       borderSide: Divider.createBorderSide(context),
     );
     return TextField(
+      controller: textEditingController,
       keyboardType: textInputType,
       obscureText: isPassword,
       onChanged: onchanged,
