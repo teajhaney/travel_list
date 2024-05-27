@@ -30,10 +30,13 @@ class _SignInScreenState extends State<SignInScreen> {
       context.goNamed(AppRoutes.buttomNavigation.name);
     } on AuthException catch (error) {
       if (!mounted) return;
-      showSnackBar(context, error.message);
+      showSnackBar(context: context, content: error.message);
     } catch (error) {
       if (!mounted) return;
-      showSnackBar(context, 'Unexpected error occured, try again later');
+      showSnackBar(
+          context: context,
+          content: 'Unexpected error occured, try again later',
+          color: Theme.of(context).colorScheme.error);
     } finally {
       if (mounted) {
         setState(() {
@@ -75,7 +78,8 @@ class _SignInScreenState extends State<SignInScreen> {
                           textInputType: TextInputType.text),
                       const Gap(n10),
                       GestureDetector(
-                        onTap: () => context.goNamed(AppRoutes.signUp.name),
+                        onTap: () =>
+                            context.goNamed(AppRoutes.forgotPassword.name),
                         child: Text(
                           forgotPassword,
                           style: getRegularStyle(

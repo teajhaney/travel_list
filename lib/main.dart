@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '/common/common_export.dart';
 import './router/router.dart';
 
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
@@ -16,9 +17,20 @@ Future<void> main() async {
 
 final supabase = Supabase.instance.client;
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    
+    super.initState();
+  }
+ 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(

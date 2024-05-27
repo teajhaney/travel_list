@@ -82,27 +82,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
           _isLoading = true;
         });
 
-         await supabase.auth.signUp(
+        await supabase.auth.signUp(
             password: _passwordController.text.trim(),
             email: _emailController.text.trim(),
             data: {'username': _usernameController.text.trim()});
-        
+
         if (!mounted) return;
         context.goNamed(AppRoutes.buttomNavigation.name);
       } on AuthException catch (error) {
         if (!mounted) return;
 
-        showSnackBar(context, error.message);
+        showSnackBar(context: context, content: error.message);
       } catch (error) {
         if (!mounted) return;
-        showSnackBar(context, 'Unexpected error occured, try again later');
+        showSnackBar(
+            context: context,
+            content: 'Unexpected error occured, try again later',
+            color: Theme.of(context).colorScheme.error);
       } finally {
         setState(() {
           _isLoading = false;
         });
       }
     } else {
-      showSnackBar(context, 'Invalid email or password');
+      showSnackBar(
+          context: context,
+          content: 'Invalid email or password',
+          color: Theme.of(context).colorScheme.error);
     }
   }
 

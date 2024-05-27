@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'common_export.dart';
 
 // ===SNACK BAR===
-void showSnackBar(BuildContext context, String content) {
+void showSnackBar({required BuildContext context, required String content, Color? color}) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(content),
+      backgroundColor: color,
     ),
   );
 }
