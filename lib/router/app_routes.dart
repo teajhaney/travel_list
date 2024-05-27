@@ -19,6 +19,8 @@ class AppRoutes {
   static Route signIn = Route(path: '/signIn', name: 'signIn');
   static Route forgotPassword =
       Route(path: '/forgotPassword', name: 'forgotPassword');
+	  static Route passwordReset =
+      Route(path: '/PasswordReset', name: 'PasswordReset');
   static Route otpInput = Route(path: '/otpInput', name: 'otpInput');
   static Route newPassword = Route(path: '/newPassword', name: 'newPassword');
   static Route passwordChanged =

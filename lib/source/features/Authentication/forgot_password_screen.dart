@@ -8,8 +8,9 @@ import 'package:travel_list/main.dart';
 import 'package:travel_list/router/app_routes.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
-  final String accessToken;
-  const ForgotPasswordScreen({super.key, required this.accessToken});
+  const ForgotPasswordScreen({
+    super.key,
+  });
 
   @override
   State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();

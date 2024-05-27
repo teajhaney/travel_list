@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
-
-
 import 'package:travel_list/common/common_export.dart';
 import 'package:gap/gap.dart';
 
-
-
 class PasswordResetScreen extends StatefulWidget {
-  const PasswordResetScreen({super.key});
+  final String resetToken;
+  const PasswordResetScreen({super.key,  required this.resetToken, String? accessToken});
 
   @override
   State<PasswordResetScreen> createState() => _PasswordResetScreenState();
@@ -25,7 +22,6 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
   void dispose() {
     _newPasswordController.dispose();
     _confirmNewPasswordController.dispose();
-
     super.dispose();
   }
 

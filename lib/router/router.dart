@@ -31,19 +31,16 @@ final router = GoRouter(
     GoRoute(
       path: AppRoutes.forgotPassword.path,
       name: AppRoutes.forgotPassword.name,
-      //   pageBuilder: (context, state) =>
-      //       const MaterialPage(child: ForgotPasswordScreen()),
+      pageBuilder: (context, state) =>
+          const MaterialPage(child: ForgotPasswordScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.passwordReset.path,
+      name: AppRoutes.passwordChanged.name,
       pageBuilder: (context, state) {
-        final String? accessToken = state.pathParameters['access_token'];
-        if (accessToken != null) {
-          return MaterialPage(
-              child: ForgotPasswordScreen(accessToken: accessToken));
-        }
-        throw {
-          Scaffold(
-            body: const Text('Invalid reset link'),
-          ),
-        };
+        final String? resetToken = state.pathParameters['access_token'];
+        return MaterialPage(
+            child: PasswordResetScreen(resetToken: resetToken!));
       },
     ),
     GoRoute(
