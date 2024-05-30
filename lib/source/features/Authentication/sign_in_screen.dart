@@ -7,6 +7,8 @@ import 'package:gap/gap.dart';
 import 'package:travel_list/main.dart';
 import 'package:travel_list/router/app_routes.dart';
 
+import 'authentication_export.dart';
+
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
@@ -18,30 +20,104 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
-  Future<void> _signIn() async {
-    try {
+  bool _isPasswordValid = false;
+
+  bool _isEmailValid = false;
+//  VALIDATE EMAIL ADDRESS
+
+  String? _validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
       setState(() {
-        _isLoading = true;
+        _isEmailValid = false;
       });
-      await supabase.auth.signInWithPassword(
-          password: _passwordController.text.trim(),
-          email: _emailController.text.trim());
-      if (!mounted) return;
-      context.goNamed(AppRoutes.buttomNavigation.name);
-    } on AuthException catch (error) {
-      if (!mounted) return;
-      showSnackBar(context: context, content: error.message);
-    } catch (error) {
-      if (!mounted) return;
-      showSnackBar(
-          context: context,
-          content: 'Unexpected error occured, try again later',
-          color: Theme.of(context).colorScheme.error);
-    } finally {
-      if (mounted) {
+      return null;
+    }
+    // Regular expression pattern for email validation
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+    if (emailRegex.hasMatch(value)) {
+      setState(() {
+        _isEmailValid = true;
+      });
+
+      // Email is valid
+    } else {
+      setState(() {
+        _isEmailValid = false;
+      });
+    }
+    return null;
+  }
+
+  //  VALIDATE PASSWORD
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      setState(() {
+        _isPasswordValid = false;
+      });
+      return null;
+    }
+    // Define your password validation rules here
+    final passwordRegex =
+        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+    if (passwordRegex.hasMatch(value)) {
+      setState(() {
+        _isPasswordValid = true;
+      });
+
+      //password is valid
+    } else {
+      setState(() {
+        _isPasswordValid = false;
+      });
+    }
+    return null;
+  }
+  // SIGN UP FUNCTION
+
+  Future<void> _signIn() async {
+    if (_isEmailValid && _isPasswordValid) {
+      try {
         setState(() {
-          _isLoading = false;
+          _isLoading = true;
         });
+        //implement sign in methods
+        String response = await AuthMethods().signInUser(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+        if (response == 'success') {
+          setState(() {
+            _isLoading = false;
+          });
+          if (!mounted) return;
+          context.goNamed(AppRoutes.buttomNavigation.name);
+        } else {
+          setState(() {
+            _isLoading = false;
+          });
+          if (!mounted) return;
+          showSnackBar(
+            context: context,
+            content: 'Sign infailed: $response',
+            color: Theme.of(context).colorScheme.error,
+          );
+        }
+      } on AuthException catch (error) {
+        if (!mounted) return;
+        showSnackBar(context: context, content: error.message);
+      } catch (error) {
+        if (!mounted) return;
+        showSnackBar(
+            context: context,
+            content: 'Unexpected error occured, try again later',
+            color: Theme.of(context).colorScheme.error);
+      } finally {
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
       }
     }
   }
@@ -66,16 +142,20 @@ class _SignInScreenState extends State<SignInScreen> {
                       const Text(email),
                       const Gap(n20),
                       TextFieldInput(
-                          textEditingController: _emailController,
-                          isPassword: false,
-                          textInputType: TextInputType.emailAddress),
+                        textEditingController: _emailController,
+                        isPassword: false,
+                        textInputType: TextInputType.emailAddress,
+                        onchanged: _validateEmail,
+                      ),
                       const Gap(n20),
                       const Text(password),
                       const Gap(n20),
                       TextFieldInput(
-                          textEditingController: _passwordController,
-                          isPassword: true,
-                          textInputType: TextInputType.text),
+                        textEditingController: _passwordController,
+                        isPassword: true,
+                        textInputType: TextInputType.text,
+                        onchanged: _validatePassword,
+                      ),
                       const Gap(n10),
                       GestureDetector(
                         onTap: () =>

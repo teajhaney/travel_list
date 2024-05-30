@@ -4,14 +4,14 @@ import 'package:travel_list/common/common_export.dart';
 
 import 'screen_export.dart';
 
-class ButtomNavigationBar extends StatefulWidget {
-  const ButtomNavigationBar({super.key});
+class ButtomNavigationBarScreen extends StatefulWidget {
+  const ButtomNavigationBarScreen({super.key});
 
   @override
-  State<ButtomNavigationBar> createState() => _ButtomNavigationBarState();
+  State<ButtomNavigationBarScreen> createState() => _ButtomNavigationBarScreenState();
 }
 
-class _ButtomNavigationBarState extends State<ButtomNavigationBar>
+class _ButtomNavigationBarScreenState extends State<ButtomNavigationBarScreen>
     with AutomaticKeepAliveClientMixin {
   final List<Widget> _screens = const [
     TravelListScreen(),

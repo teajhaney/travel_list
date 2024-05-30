@@ -38,16 +38,15 @@ final router = GoRouter(
       path: AppRoutes.passwordReset.path,
       name: AppRoutes.passwordChanged.name,
       pageBuilder: (context, state) {
-        final String? resetToken = state.pathParameters['access_token'];
-        return MaterialPage(
-            child: PasswordResetScreen(resetToken: resetToken!));
+        // final String? resetToken = state.pathParameters['access_token'];
+        return const MaterialPage(child: PasswordResetScreen());
       },
     ),
     GoRoute(
       path: AppRoutes.buttomNavigation.path,
       name: AppRoutes.buttomNavigation.name,
       pageBuilder: (context, state) =>
-          const MaterialPage(child: ButtomNavigationBar()),
+          const MaterialPage(child: ButtomNavigationBarScreen()),
     ),
   ],
 );

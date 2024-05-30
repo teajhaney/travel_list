@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "671878337704",
+    "project_id": "travel-list-29",
+    "storage_bucket": "travel-list-29.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:671878337704:android:7f7d5a1a00ba7a5c9e5e9d",
+        "android_client_info": {
+          "package_name": "com.example.travel_list"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYJwgVHXtYUOhBY16hStzUNxtI10diZPo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

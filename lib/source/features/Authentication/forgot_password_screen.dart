@@ -7,6 +7,8 @@ import 'package:gap/gap.dart';
 import 'package:travel_list/main.dart';
 import 'package:travel_list/router/app_routes.dart';
 
+import 'authentication_export.dart';
+
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({
     super.key,
@@ -20,21 +22,64 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final TextEditingController _emailController = TextEditingController();
 
   bool _isLoading = false;
+  bool _isEmailValid = false;
+
+  //  VALIDATE EMAIL ADDRESS
+
+  String? _validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      setState(() {
+        _isEmailValid = false;
+      });
+      return null;
+    }
+    // Regular expression pattern for email validation
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+    if (emailRegex.hasMatch(value)) {
+      setState(() {
+        _isEmailValid = true;
+      });
+
+      // Email is valid
+    } else {
+      setState(() {
+        _isEmailValid = false;
+      });
+    }
+    return null;
+  }
+
   Future<void> _resetPassword() async {
     final email = _emailController.text.trim();
-    if (email.isNotEmpty) {
+    if (_isEmailValid) {
       try {
         setState(() {
           _isLoading = true;
         });
-        await supabase.auth.resetPasswordForEmail(_emailController.text.trim());
-        if (!mounted) return;
-        showSnackBar(
+        //implement forgot password
+        String response = await AuthMethods().resetPassword(email: email);
+
+        if (response == "success") {
+          setState(() {
+            _isLoading = false;
+          });
+          if (!mounted) return;
+          showSnackBar(
+              context: context,
+              content: "Password reset email sent successfully");
+          context.goNamed(AppRoutes.signIn.name);
+        } else {
+          setState(() {
+            _isLoading = false;
+          });
+          if (!mounted) return;
+          showSnackBar(
             context: context,
-            content: "Password reset email sent successfully");
-        context.goNamed(
-          AppRoutes.signIn.name,
-        );
+            content: 'Password reset failed: $response',
+            color: Theme.of(context).colorScheme.error,
+          );
+        }
       } on AuthException catch (error) {
         if (mounted) return;
         showSnackBar(
@@ -79,12 +124,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(password),
+                      const Text(email),
                       const Gap(n20),
                       TextFieldInput(
-                          textEditingController: _emailController,
-                          isPassword: false,
-                          textInputType: TextInputType.emailAddress),
+                        textEditingController: _emailController,
+                        isPassword: false,
+                        textInputType: TextInputType.emailAddress,
+                        onchanged: _validateEmail,
+                      ),
                       const Gap(n20),
                       const Gap(n20),
                       Center(

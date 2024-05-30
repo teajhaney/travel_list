@@ -4,8 +4,11 @@ import 'package:travel_list/common/common_export.dart';
 import 'package:gap/gap.dart';
 
 class PasswordResetScreen extends StatefulWidget {
-  final String resetToken;
-  const PasswordResetScreen({super.key,  required this.resetToken, String? accessToken});
+//   final String resetToken;
+  const PasswordResetScreen({
+    super.key, 
+	//required this.resetToken,
+  });
 
   @override
   State<PasswordResetScreen> createState() => _PasswordResetScreenState();

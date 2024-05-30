@@ -9,6 +9,7 @@ class Route {
 
 class AppRoutes {
   AppRoutes._();
+//   static Route authSession = Route(path: '/authSession', name: 'authSession');
   static Route onboard = Route(path: '/onboard', name: 'onboard');
   static Route getStarted = Route(path: '/getStarted', name: 'getStarted');
 
