@@ -6,7 +6,7 @@ import 'package:travel_list/common/common_export.dart';
 import 'package:gap/gap.dart';
 import 'package:travel_list/router/app_routes.dart';
 
-import 'authentication_export.dart';
+import '../authentication_export.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -30,7 +30,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       setState(() {
-        _isEmailValid = false;
+        _isEmailValid = false; 
       });
       return null;
     }
@@ -99,7 +99,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           });
 
           if (!mounted) return;
-          context.goNamed(AppRoutes.buttomNavigation.name);
+          context.goNamed(AppRoutes.emailVerification.name);
         } else {
           setState(() {
             _isLoading = false;
@@ -107,7 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           if (!mounted) return;
           showSnackBar(
             context: context,
-            content: 'Sign up failed: $response',
+            content: 'Sign up failed, Try Again later',
             color: Theme.of(context).colorScheme.error,
           );
         }

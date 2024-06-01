@@ -4,10 +4,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:travel_list/common/common_export.dart';
 import 'package:gap/gap.dart';
-import 'package:travel_list/main.dart';
 import 'package:travel_list/router/app_routes.dart';
 
-import 'authentication_export.dart';
+import '../authentication_export.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({
@@ -139,6 +138,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         isLoading: !_isLoading,
                         onPressed: _resetPassword,
                         label: resetPassword,
+                      )),
+                      const Gap(n20),
+                      Center(
+                          child: FillButton(
+                        isLoading: !_isLoading,
+                        onPressed: () => context.goNamed(AppRoutes.signIn.name),
+                        label: signIn,
                       )),
                     ]))));
   }

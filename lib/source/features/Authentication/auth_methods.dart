@@ -1,4 +1,3 @@
-
 import '../Authentication/authentication_export.dart' as model;
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -8,14 +7,15 @@ class AuthMethods {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
+
 //sign up user
 
   Future<String> signUpUser(
       {required String firstName,
       required String lastName,
-	  required String userName,
+      required String userName,
       required String email,
-	  
       required String password}) async {
     String response = "Some error Occurred";
 
@@ -23,16 +23,19 @@ class AuthMethods {
       if (email.isNotEmpty ||
           password.isNotEmpty ||
           lastName.isNotEmpty ||
-          firstName.isNotEmpty|| userName.isNotEmpty) {
+          firstName.isNotEmpty ||
+          userName.isNotEmpty) {
         UserCredential credential = await _firebaseAuth
             .createUserWithEmailAndPassword(email: email, password: password);
+        // verifyEmail();
 
         model.User user = model.User(
           firstName: firstName,
           lastName: lastName,
           email: email,
           password: password,
-          uid: credential.user!.uid, userName: userName,
+          uid: credential.user!.uid,
+          userName: userName,
         );
 
         //adding user info
@@ -51,6 +54,10 @@ class AuthMethods {
     return response;
   }
 
+  //verify email
+  Future<void> verifyEmail() async {
+    await _firebaseAuth.currentUser!.sendEmailVerification();
+  }
 
 //Signin user
   Future<String> signInUser(
@@ -75,20 +82,19 @@ class AuthMethods {
 
   // reset password
   Future<String> resetPassword({required String email}) async {
-	String response = "Some error Occurred";
-	try {
-	  if (email.isNotEmpty) {
-		await _firebaseAuth.sendPasswordResetEmail(email: email);
-		response = "success";
-	  } else {
-		response = "Please enter all the fields";
-	  }
-	} catch (error) {
-	  error.toString();
-	}
-	return response;
+    String response = "Some error Occurred";
+    try {
+      if (email.isNotEmpty) {
+        await _firebaseAuth.sendPasswordResetEmail(email: email);
+        response = "success";
+      } else {
+        response = "Please enter all the fields";
+      }
+    } catch (error) {
+      error.toString();
+    }
+    return response;
   }
-
 
 //Log out user
   Future<void> signOutUser() async {

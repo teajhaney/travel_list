@@ -15,7 +15,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 1), () {
-      context.goNamed(AppRoutes.signIn.name);
+      context.goNamed(AppRoutes.buttomNavigation.name);
     });
   }
 

@@ -2,5 +2,7 @@
     "dart.previewFlutterUiGuides": true,
     "dart.previewFlutterUiGuidesCustomTracking": true,
     "dart.previewHotReloadOnSaveWatcher": true,
-    "editor.lineHeight": 20
+    "editor.lineHeight": 20,
+    "editor.fontFamily": "JetBrains Mono Thin Italic",
+    "editor.fontSize": 10
 }

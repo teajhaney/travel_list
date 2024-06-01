@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:travel_list/common/app_widgets.dart';
-import 'package:travel_list/main.dart';
 import 'package:travel_list/router/app_routes.dart';
 import 'package:travel_list/source/features/Authentication/authentication_export.dart';
 

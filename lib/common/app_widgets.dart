@@ -48,6 +48,44 @@ class TextFieldInput extends StatelessWidget {
   }
 }
 
+//====BUTTON FILLED===
+class ButtonFiled extends StatelessWidget {
+  final VoidCallback onPressed;
+  final String label;
+  const ButtonFiled({
+    super.key,
+    required this.onPressed,
+    required this.label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FilledButton(
+        style: ButtonStyle(
+            backgroundColor:
+                WidgetStateProperty.all(Theme.of(context).colorScheme.primary),
+            foregroundColor: WidgetStateProperty.all<Color>(
+              Theme.of(context).colorScheme.onPrimary,
+            ),
+            shape: WidgetStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(n10),
+              ),
+            )),
+        onPressed: onPressed,
+        child: Text(
+          label,
+          style: getMediumStyle(
+              fontSize: n20,
+              color: Theme.of(context).colorScheme.onPrimaryContainer),
+        ));
+  }
+}
+// AuthMethods().signOutUser();
+//           context.goNamed(AppRoutes.signIn.name);
+
+
+
 //====FILLED BUTTON===
 
 class FillButton extends StatelessWidget {
@@ -56,7 +94,7 @@ class FillButton extends StatelessWidget {
   final VoidCallback onPressed;
   const FillButton({
     super.key,
-    required this.isLoading,
+     required this.isLoading,
     required this.label,
     required this.onPressed,
   });

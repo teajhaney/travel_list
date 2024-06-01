@@ -13,8 +13,7 @@ class AppRoutes {
   static Route onboard = Route(path: '/onboard', name: 'onboard');
   static Route getStarted = Route(path: '/getStarted', name: 'getStarted');
 
-  static Route buttomNavigation =
-      Route(path: '/bottomnavigation', name: 'bottomnavigation');
+
 
   static Route signUp = Route(path: '/signUp', name: 'signUp');
   static Route signIn = Route(path: '/signIn', name: 'signIn');
@@ -26,4 +25,10 @@ class AppRoutes {
   static Route newPassword = Route(path: '/newPassword', name: 'newPassword');
   static Route passwordChanged =
       Route(path: '/passwordChanged', name: 'passwordChanged');
+
+	    static Route emailVerification =
+      Route(path: '/emailverification', name: 'emailverification');
+
+	   static Route buttomNavigation =
+      Route(path: '/bottomnavigation', name: 'bottomnavigation');
 }

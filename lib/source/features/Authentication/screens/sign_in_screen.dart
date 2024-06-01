@@ -4,10 +4,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:travel_list/common/common_export.dart';
 import 'package:gap/gap.dart';
-import 'package:travel_list/main.dart';
 import 'package:travel_list/router/app_routes.dart';
 
-import 'authentication_export.dart';
+import '../authentication_export.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -91,7 +90,7 @@ class _SignInScreenState extends State<SignInScreen> {
             _isLoading = false;
           });
           if (!mounted) return;
-          context.goNamed(AppRoutes.buttomNavigation.name);
+          context.goNamed(AppRoutes.emailVerification.name);
         } else {
           setState(() {
             _isLoading = false;
@@ -99,7 +98,7 @@ class _SignInScreenState extends State<SignInScreen> {
           if (!mounted) return;
           showSnackBar(
             context: context,
-            content: 'Sign infailed: $response',
+            content: 'Sign in failed, try again later',
             color: Theme.of(context).colorScheme.error,
           );
         }
