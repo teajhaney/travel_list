@@ -166,9 +166,11 @@ class _SearchTextFieldState extends State<SearchTextField> {
         hintText: 'Search trips',
         hintStyle:
             TextStyle(color: Theme.of(context).colorScheme.primaryContainer),
-        suffixIcon: const Icon(Icons.filter_list),
+        suffixIcon:
+            IconButton(onPressed: () {}, icon: const Icon(Icons.filter_list)),
         suffixIconColor: Theme.of(context).colorScheme.primaryContainer,
-        prefixIcon: const Icon(Icons.search),
+        prefixIcon:
+            IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
         prefixIconColor: Theme.of(context).colorScheme.primaryContainer,
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
