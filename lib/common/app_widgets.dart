@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'common_export.dart';
 
 // ===SNACK BAR===
-void showSnackBar({required BuildContext context, required String content, Color? color}) {
+void showSnackBar(
+    {required BuildContext context, required String content, Color? color}) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(content),
@@ -84,8 +85,6 @@ class ButtonFiled extends StatelessWidget {
 // AuthMethods().signOutUser();
 //           context.goNamed(AppRoutes.signIn.name);
 
-
-
 //====FILLED BUTTON===
 
 class FillButton extends StatelessWidget {
@@ -94,7 +93,7 @@ class FillButton extends StatelessWidget {
   final VoidCallback onPressed;
   const FillButton({
     super.key,
-     required this.isLoading,
+    required this.isLoading,
     required this.label,
     required this.onPressed,
   });
@@ -124,6 +123,66 @@ class FillButton extends StatelessWidget {
                 fontSize: n20,
                 color: Theme.of(context).colorScheme.onPrimaryContainer),
           )),
+    );
+  }
+}
+
+// SEARCH FIELD BUTTON
+class SearchTextField extends StatefulWidget {
+  const SearchTextField({
+    super.key,
+  });
+
+  @override
+  State<SearchTextField> createState() => _SearchTextFieldState();
+}
+
+class _SearchTextFieldState extends State<SearchTextField> {
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(() {
+      setState(() {}); // Update the UI when the focus state changes
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      style: TextStyle(color: Theme.of(context).colorScheme.shadow),
+      focusNode: _focusNode,
+      maxLines: 1,
+      decoration: InputDecoration(
+        fillColor: Theme.of(context).colorScheme.onPrimary,
+        focusColor: Theme.of(context).colorScheme.surface,
+        hintText: 'Search trips',
+        hintStyle:
+            TextStyle(color: Theme.of(context).colorScheme.primaryContainer),
+        suffixIcon: const Icon(Icons.filter_list),
+        suffixIconColor: Theme.of(context).colorScheme.primaryContainer,
+        prefixIcon: const Icon(Icons.search),
+        prefixIconColor: Theme.of(context).colorScheme.primaryContainer,
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.surface,
+          ),
+          borderRadius: const BorderRadius.all(Radius.circular(n65)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.surface,
+          ),
+          borderRadius: const BorderRadius.all(Radius.circular(n65)),
+        ),
+      ),
     );
   }
 }

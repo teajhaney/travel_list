@@ -8,7 +8,8 @@ class ButtomNavigationBarScreen extends StatefulWidget {
   const ButtomNavigationBarScreen({super.key});
 
   @override
-  State<ButtomNavigationBarScreen> createState() => _ButtomNavigationBarScreenState();
+  State<ButtomNavigationBarScreen> createState() =>
+      _ButtomNavigationBarScreenState();
 }
 
 class _ButtomNavigationBarScreenState extends State<ButtomNavigationBarScreen>
@@ -44,6 +45,7 @@ class _ButtomNavigationBarScreenState extends State<ButtomNavigationBarScreen>
                 .values
                 .toList(),
             fixedColor: Theme.of(context).colorScheme.primaryContainer,
+            backgroundColor: Theme.of(context).colorScheme.surface,
             currentIndex: _currentIndex,
             onTap: (index) => setState(() => _currentIndex = index),
           ),

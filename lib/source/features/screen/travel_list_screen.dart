@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:travel_list/common/common_export.dart';
+
 class TravelListScreen extends StatefulWidget {
   const TravelListScreen({super.key});
 
@@ -10,6 +12,47 @@ class TravelListScreen extends StatefulWidget {
 class _TravelListScreenState extends State<TravelListScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              alignment: Alignment.topCenter,
+              height: n150,
+              width: MediaQuery.of(context).size.width,
+              color: Theme.of(context).colorScheme.surface,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ListTile(
+                    textColor: Theme.of(context).colorScheme.primaryContainer,
+                    title: const Text(location),
+                    subtitle: const Row(
+                      children: [
+                        Icon(Icons.location_on_outlined),
+                        Text('Exact location'),
+                      ],
+                    ),
+                    trailing: const CircleAvatar(),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: n10),
+                    child: SearchTextField(),
+                  )
+                ],
+              ),
+            ),
+            Expanded(
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
