@@ -1,4 +1,5 @@
 const double n5 = 5;
+const double n8 = 8;
 const double n10 = 10;
 const double n15 = 15;
 const double n16 = 16;
@@ -21,6 +22,7 @@ const double n85 = 85;
 const double n90 = 90;
 const double n95 = 95;
 const double n100 = 100;
+const double n200 = 200;
 const double n150 = 150;
 const double n158 = 158;
 const double n400 = 400;

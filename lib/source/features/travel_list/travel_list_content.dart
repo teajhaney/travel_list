@@ -22,9 +22,9 @@ class _TravelListContentState extends State<TravelListContent> {
           itemCount: 10,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(n8),
               child: Container(
-                height: 200,
+                height: n200,
                 width: MediaQuery.of(context).size.width,
                 decoration: const BoxDecoration(
                   color: Colors.red,
@@ -65,4 +65,3 @@ class _TravelListContentState extends State<TravelListContent> {
     );
   }
 }
-
