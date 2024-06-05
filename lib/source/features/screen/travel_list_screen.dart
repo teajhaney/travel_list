@@ -49,7 +49,7 @@ class _TravelListScreenState extends State<TravelListScreen> {
                 ],
               ),
             ),
-          const  TravelListContent()
+            const TravelListContent()
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -70,4 +70,3 @@ class _TravelListScreenState extends State<TravelListScreen> {
     );
   }
 }
-
