@@ -18,19 +18,19 @@ final router = GoRouter(
     GoRoute(
       path: AppRoutes.buttomNavigation.path,
       name: AppRoutes.buttomNavigation.name,
-      redirect: (context, state) async {
-        final authService = AuthMethods();
-        return authService.authStateChanges.first.then((user) async {
-          if (user == null ||
-              !FirebaseAuth.instance.currentUser!.emailVerified) {
-            // User is not signed in, redirect to sign-in page
-            return state.namedLocation(AppRoutes.signIn.name);
-          } else {
-            // User is signed in, stay on the current page
-            return null;
-          }
-        });
-      },
+      //   redirect: (context, state) async {
+      //     final authService = AuthMethods();
+      //     return authService.authStateChanges.first.then((user) async {
+      //       if (user == null ||
+      //           !FirebaseAuth.instance.currentUser!.emailVerified) {
+      //         // User is not signed in, redirect to sign-in page
+      //         return state.namedLocation(AppRoutes.signIn.name);
+      //       } else {
+      //         // User is signed in, stay on the current page
+      //         return null;
+      //       }
+      //     });
+      //   },
       pageBuilder: (context, state) =>
           const MaterialPage(child: ButtomNavigationBarScreen()),
     ),
