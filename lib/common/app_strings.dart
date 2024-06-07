@@ -21,3 +21,6 @@ const String passwordRule =
     'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character';
 const String resetPasswordRule = 'Input a valid email address';
 const String location = 'Location';
+const String addList = 'Add a List';
+const String listTitle = 'Let\'s start with a Title';
+const String addDescription = 'Add discription';

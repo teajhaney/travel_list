@@ -27,7 +27,6 @@ class _TravelListContentState extends State<TravelListContent> {
                 height: n200,
                 width: MediaQuery.of(context).size.width,
                 decoration: const BoxDecoration(
-                  color: Colors.red,
                   image: DecorationImage(
                     fit: BoxFit.cover,
                     image: AssetImage(manutdStars),

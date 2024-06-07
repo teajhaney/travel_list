@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -18,7 +19,10 @@ class ButtomSheetContent extends StatefulWidget {
 }
 
 class _ButtomSheetContentState extends State<ButtomSheetContent> {
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
   ImageProvider? backgroundImage;
+
   bool showIconButton = true;
   @override
   void initState() {
@@ -32,66 +36,136 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
 
   Future<void> pickImage() async {
     final imagePicker = ImagePicker();
+    final imageCropper = ImageCropper();
     final XFile? pickedImage =
         await imagePicker.pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
-      setState(() {
-        backgroundImage = FileImage(File(pickedImage.path));
-        showIconButton = false;
-      });
+      if (!mounted) return;
+      // Crop the image
+      CroppedFile? croppedFile = await imageCropper.cropImage(
+        sourcePath: pickedImage.path,
+        aspectRatioPresets: [
+          CropAspectRatioPreset.square,
+          CropAspectRatioPreset.ratio3x2,
+          CropAspectRatioPreset.original,
+          CropAspectRatioPreset.ratio4x3,
+          CropAspectRatioPreset.ratio16x9
+          // You can add other aspect ratio presets (e.g., CropAspectRatioPreset.ratio16x9)
+        ],
+        uiSettings: [
+          AndroidUiSettings(
+            toolbarTitle: 'Crop Image',
+            toolbarColor: Theme.of(context).colorScheme.primaryContainer,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false,
+          ),
+          IOSUiSettings(
+            title: 'Crop Image',
+          )
+        ],
+      );
+      if (croppedFile != null) {
+        setState(() {
+          backgroundImage = FileImage(File(croppedFile.path));
+          showIconButton = false;
+        });
+      } else {
+        if (croppedFile == null) return;
+        // Handle cropping cancellation or error
+      }
     }
   }
 
   @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(
-          n10,
-        ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  onPressed: () {},
-                  icon: const Icon(Icons.favorite_outline),
-                ),
-                IconButton(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  onPressed: () {},
-                  icon: const Icon(Icons.more_vert),
-                )
-              ],
-            ),
-            const Gap(n10),
-            DottedBorder(
-                strokeWidth: 1,
-                dashPattern: const [n30, n10],
-                color: Theme.of(context).colorScheme.primaryContainer,
-                child: Container(
-                  height: n200,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    image: backgroundImage != null
-                        ? DecorationImage(
-                            image: backgroundImage!,
-                            fit: BoxFit.cover,
-                          )
-                        : null,
+    return Material(
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(
+            n10,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    onPressed: () {},
+                    icon: const Icon(Icons.favorite_outline),
                   ),
-                  child: showIconButton
-                      ? Center(
-                          child: IconButton(
-                          color: Theme.of(context).colorScheme.primaryContainer,
-                          onPressed: pickImage,
-                          icon: const Icon(Icons.add),
-                        ))
-                      : null,
-                )),
-          ],
+                  Text(
+                    addList,
+                    style: getBoldStyle(
+                      fontSize: 20,
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                    ),
+                  ),
+                  IconButton(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    onPressed: () {},
+                    icon: const Icon(Icons.more_vert),
+                  )
+                ],
+              ),
+              const Gap(n10),
+              DottedBorder(
+                  strokeWidth: 1,
+                  dashPattern: const [n30, n10],
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  child: Container(
+                    height: n200,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      image: backgroundImage != null
+                          ? DecorationImage(
+                              image: backgroundImage!,
+                              fit: BoxFit.cover,
+                            )
+                          : null,
+                    ),
+                    child: showIconButton
+                        ? Center(
+                            child: IconButton(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .primaryContainer
+                                .withOpacity(0.5),
+                            onPressed: pickImage,
+                            icon: const Icon(Icons.add),
+                          ))
+                        : null,
+                  )),
+              const Gap(n10),
+              BorderlessTextField(
+                controller: titleController,
+                autofocus: true,
+                hintText: listTitle,
+                hintStyle: getRegularStyle(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  fontSize: 30,
+                ),
+              ),
+              const Gap(n10),
+              BorderlessTextField(
+                controller: descriptionController,
+                hintText: addDescription,
+                hintStyle: getRegularStyle(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  fontSize: 20,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

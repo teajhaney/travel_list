@@ -126,3 +126,42 @@ class FillButton extends StatelessWidget {
     );
   }
 }
+
+//== BORDERLESS TEXTFIELD
+class BorderlessTextField extends StatelessWidget {
+  final String hintText;
+  final TextEditingController controller;
+  final TextStyle? hintStyle;
+  final bool autofocus;
+
+  const BorderlessTextField({
+    super.key,
+    required this.hintText,
+    required this.controller,
+    this.hintStyle,
+    this.autofocus = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      autofocus: autofocus,
+      autocorrect: true,
+      maxLines: 1,
+      maxLength: n20.toInt(),
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: hintStyle,
+        fillColor: Theme.of(context).colorScheme.surface,
+        border: InputBorder.none,
+        focusedBorder: InputBorder.none,
+        enabledBorder: InputBorder.none,
+        disabledBorder: InputBorder.none,
+        errorBorder: InputBorder.none,
+        focusedErrorBorder: InputBorder.none,
+        counterText: '',
+      ),
+    );
+  }
+}
