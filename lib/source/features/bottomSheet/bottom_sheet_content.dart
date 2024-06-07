@@ -173,61 +173,42 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
               ),
               const Gap(n10),
               Expanded(
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: ListView.builder(
-                    itemCount: 1,
-                    physics: const ScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Row(
-                        children: [
-                          Checkbox(
-                            value: isChecked,
-                            activeColor:
-                                Theme.of(context).colorScheme.primary,
-                            onChanged: (newValue) {
-                              setState(() {
-                                isChecked = newValue;
-                              });
-                            },
-                          ),
-                          const Gap(n10),
-                          BorderlessTextField(
-                            controller: itemController,
-                            autofocus: true,
-                            hintText: listTitle,
-                            hintStyle: getRegularStyle(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer,
-                              fontSize: 15,
+                child: ListView.builder(
+                  itemCount: 1,
+                  physics: const ScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Checkbox(
+                          value: isChecked,
+                          activeColor: Theme.of(context).colorScheme.primary,
+                          onChanged: (newValue) {
+                            setState(() {
+                              isChecked = newValue;
+                            });
+                          },
+                        ),
+                        const Gap(2),
+                        Expanded(
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: BorderlessTextField(
+                              controller: itemController,
+                              autofocus: true,
+                              hintText: listTitle,
+                              hintStyle: getRegularStyle(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontSize: 15,
+                              ),
                             ),
                           ),
-                          //   ListTile(
-                          //     leading: Checkbox(
-                          //       value: isChecked,
-                          //       activeColor: Theme.of(context).colorScheme.primary,
-                          //       onChanged: (newValue) {
-                          //         setState(() {
-                          //           isChecked = newValue;
-                          //         });
-                          //       },
-                          //     ),
-                          //     title: BorderlessTextField(
-                          //       controller: itemController,
-                          //       autofocus: true,
-                          //       hintText: listTitle,
-                          //       hintStyle: getRegularStyle(
-                          //         color:
-                          //             Theme.of(context).colorScheme.primaryContainer,
-                          //         fontSize: 15,
-                          //       ),
-                          //     ),
-                          //   ),
-                        ],
-                      );
-                    },
-                  ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               )
             ],

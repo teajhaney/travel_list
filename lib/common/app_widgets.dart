@@ -162,6 +162,7 @@ class BorderlessTextField extends StatelessWidget {
       style: textStyle,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
+        contentPadding: const EdgeInsets.all(n0),
         hintText: hintText,
         hintStyle: hintStyle,
         fillColor: Theme.of(context).colorScheme.surface,
