@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -118,33 +117,26 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
                 ],
               ),
               const Gap(n10),
-              DottedBorder(
-                  strokeWidth: 1,
-                  dashPattern: const [n30, n10],
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  child: Container(
-                    height: n200,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      image: backgroundImage != null
-                          ? DecorationImage(
-                              image: backgroundImage!,
-                              fit: BoxFit.cover,
-                            )
-                          : null,
-                    ),
-                    child: showIconButton
-                        ? Center(
-                            child: IconButton(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primaryContainer
-                                .withOpacity(0.5),
-                            onPressed: pickImage,
-                            icon: const Icon(Icons.add),
-                          ))
-                        : null,
-                  )),
+              DottedBorderContainer(
+                decorationImage: backgroundImage != null
+                    ? DecorationImage(
+                        image: backgroundImage!,
+                        fit: BoxFit.cover,
+                      )
+                    : null,
+                color: Theme.of(context).colorScheme.primaryContainer,
+                child: showIconButton
+                    ? Center(
+                        child: IconButton(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primaryContainer
+                            .withOpacity(0.5),
+                        onPressed: pickImage,
+                        icon: const Icon(Icons.add),
+                      ))
+                    : null,
+              ),
               const Gap(n10),
               BorderlessTextField(
                 controller: titleController,
@@ -162,6 +154,19 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
                 hintStyle: getRegularStyle(
                   color: Theme.of(context).colorScheme.primaryContainer,
                   fontSize: 20,
+                ),
+              ),
+              const Gap(n10),
+              Expanded(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: ListView.builder(
+                    itemCount: 10,
+                    physics: const ScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      return;
+                    },
+                  ),
                 ),
               )
             ],

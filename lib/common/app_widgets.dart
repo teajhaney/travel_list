@@ -1,3 +1,4 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
 import 'common_export.dart';
@@ -127,7 +128,7 @@ class FillButton extends StatelessWidget {
   }
 }
 
-//== BORDERLESS TEXTFIELD
+//== BORDERLESS TEXTFIELD===
 class BorderlessTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
@@ -163,5 +164,33 @@ class BorderlessTextField extends StatelessWidget {
         counterText: '',
       ),
     );
+  }
+}
+
+//=== DOTTED BORDER CONTAINER===
+class DottedBorderContainer extends StatelessWidget {
+  final DecorationImage? decorationImage;
+  final Widget? child;
+  final Color? color;
+
+  const DottedBorderContainer({
+    super.key,
+    this.decorationImage,
+    this.child,
+     this.color ,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return DottedBorder(
+        strokeWidth: 1,
+        dashPattern: const [n30, n10],
+        color: color!,
+        child: Container(
+          height: n200,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(image: decorationImage),
+          child: child,
+        ));
   }
 }
