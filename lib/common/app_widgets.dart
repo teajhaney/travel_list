@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
@@ -133,6 +135,9 @@ class BorderlessTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
   final TextStyle? hintStyle;
+  final TextStyle? textStyle;
+  final int? maxLines;
+  final int? maxLengh;
   final bool autofocus;
 
   const BorderlessTextField({
@@ -141,6 +146,9 @@ class BorderlessTextField extends StatelessWidget {
     required this.controller,
     this.hintStyle,
     this.autofocus = false,
+    this.maxLines,
+    this.maxLengh,
+    this.textStyle,
   });
 
   @override
@@ -149,8 +157,10 @@ class BorderlessTextField extends StatelessWidget {
       controller: controller,
       autofocus: autofocus,
       autocorrect: true,
-      maxLines: 1,
-      maxLength: n20.toInt(),
+      maxLines: maxLines,
+      maxLength: maxLengh,
+      style: textStyle,
+      textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: hintStyle,
@@ -177,7 +187,7 @@ class DottedBorderContainer extends StatelessWidget {
     super.key,
     this.decorationImage,
     this.child,
-     this.color ,
+    this.color,
   });
 
   @override

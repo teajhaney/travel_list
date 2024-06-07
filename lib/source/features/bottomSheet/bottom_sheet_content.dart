@@ -20,7 +20,10 @@ class ButtomSheetContent extends StatefulWidget {
 class _ButtomSheetContentState extends State<ButtomSheetContent> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController itemController = TextEditingController();
   ImageProvider? backgroundImage;
+
+  bool? isChecked = false;
 
   bool showIconButton = true;
   @override
@@ -140,19 +143,31 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
               const Gap(n10),
               BorderlessTextField(
                 controller: titleController,
+                maxLines: 1,
+                maxLengh: n20.toInt(),
                 autofocus: true,
                 hintText: listTitle,
                 hintStyle: getRegularStyle(
-                  color: Theme.of(context).colorScheme.primaryContainer,
+                  color: Theme.of(context).colorScheme.primary,
+                  fontSize: 30,
+                ),
+                textStyle: getRegularStyle(
+                  color: Theme.of(context).colorScheme.primary,
                   fontSize: 30,
                 ),
               ),
               const Gap(n10),
               BorderlessTextField(
                 controller: descriptionController,
+                maxLines: 2,
+                maxLengh: n75.toInt(),
                 hintText: addDescription,
                 hintStyle: getRegularStyle(
-                  color: Theme.of(context).colorScheme.primaryContainer,
+                  color: Theme.of(context).colorScheme.primary,
+                  fontSize: 20,
+                ),
+                textStyle: getRegularStyle(
+                  color: Theme.of(context).colorScheme.primary,
                   fontSize: 20,
                 ),
               ),
@@ -161,10 +176,56 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: ListView.builder(
-                    itemCount: 10,
+                    itemCount: 1,
                     physics: const ScrollPhysics(),
                     itemBuilder: (BuildContext context, int index) {
-                      return;
+                      return Row(
+                        children: [
+                          Checkbox(
+                            value: isChecked,
+                            activeColor:
+                                Theme.of(context).colorScheme.primary,
+                            onChanged: (newValue) {
+                              setState(() {
+                                isChecked = newValue;
+                              });
+                            },
+                          ),
+                          const Gap(n10),
+                          BorderlessTextField(
+                            controller: itemController,
+                            autofocus: true,
+                            hintText: listTitle,
+                            hintStyle: getRegularStyle(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
+                              fontSize: 15,
+                            ),
+                          ),
+                          //   ListTile(
+                          //     leading: Checkbox(
+                          //       value: isChecked,
+                          //       activeColor: Theme.of(context).colorScheme.primary,
+                          //       onChanged: (newValue) {
+                          //         setState(() {
+                          //           isChecked = newValue;
+                          //         });
+                          //       },
+                          //     ),
+                          //     title: BorderlessTextField(
+                          //       controller: itemController,
+                          //       autofocus: true,
+                          //       hintText: listTitle,
+                          //       hintStyle: getRegularStyle(
+                          //         color:
+                          //             Theme.of(context).colorScheme.primaryContainer,
+                          //         fontSize: 15,
+                          //       ),
+                          //     ),
+                          //   ),
+                        ],
+                      );
                     },
                   ),
                 ),
