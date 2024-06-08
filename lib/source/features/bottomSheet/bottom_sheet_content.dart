@@ -21,9 +21,11 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController itemController = TextEditingController();
+
+  final ScrollController controller = ScrollController();
   ImageProvider? backgroundImage;
 
-  bool? isChecked = false;
+  bool isChecked = false;
 
   bool showIconButton = true;
   @override
@@ -83,6 +85,7 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
   void dispose() {
     titleController.dispose();
     descriptionController.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -90,128 +93,139 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
   Widget build(BuildContext context) {
     return Material(
       child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(
-            n10,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                    onPressed: () {},
-                    icon: const Icon(Icons.favorite_outline),
-                  ),
-                  Text(
-                    addList,
-                    style: getBoldStyle(
-                      fontSize: 20,
+        child: SingleChildScrollView(
+          physics: const ScrollPhysics(),
+          controller: controller,
+          child: Padding(
+            padding: const EdgeInsets.all(
+              n10,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
                       color: Theme.of(context).colorScheme.primaryContainer,
+                      onPressed: () {},
+                      icon: const Icon(Icons.favorite_outline),
                     ),
-                  ),
-                  IconButton(
+                    Text(
+                      addList,
+                      style: getBoldStyle(
+                        fontSize: 20,
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                      ),
+                    ),
+                    IconButton(
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      onPressed: () {},
+                      icon: const Icon(Icons.more_vert),
+                    )
+                  ],
+                ),
+                const Gap(n10),
+                DottedBorderContainer(
+                  decorationImage: backgroundImage != null
+                      ? DecorationImage(
+                          image: backgroundImage!,
+                          fit: BoxFit.cover,
+                        )
+                      : null,
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  child: showIconButton
+                      ? Center(
+                          child: IconButton(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primaryContainer
+                              .withOpacity(0.5),
+                          onPressed: pickImage,
+                          icon: const Icon(Icons.add),
+                        ))
+                      : null,
+                ),
+                const Gap(n10),
+                BorderlessTextField(
+                  controller: titleController,
+                  maxLines: 1,
+                  maxLengh: n20.toInt(),
+                  autofocus: true,
+                  hintText: listTitle,
+                  hintStyle: getRegularStyle(
                     color: Theme.of(context).colorScheme.primaryContainer,
-                    onPressed: () {},
-                    icon: const Icon(Icons.more_vert),
-                  )
-                ],
-              ),
-              const Gap(n10),
-              DottedBorderContainer(
-                decorationImage: backgroundImage != null
-                    ? DecorationImage(
-                        image: backgroundImage!,
-                        fit: BoxFit.cover,
-                      )
-                    : null,
-                color: Theme.of(context).colorScheme.primaryContainer,
-                child: showIconButton
-                    ? Center(
-                        child: IconButton(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primaryContainer
-                            .withOpacity(0.5),
-                        onPressed: pickImage,
-                        icon: const Icon(Icons.add),
-                      ))
-                    : null,
-              ),
-              const Gap(n10),
-              BorderlessTextField(
-                controller: titleController,
-                maxLines: 1,
-                maxLengh: n20.toInt(),
-                autofocus: true,
-                hintText: listTitle,
-                hintStyle: getRegularStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: 30,
+                    fontSize: 30,
+                  ),
+                  textStyle: getRegularStyle(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    fontSize: 30,
+                  ),
                 ),
-                textStyle: getRegularStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: 30,
+                const Gap(n10),
+                BorderlessTextField(
+                  controller: descriptionController,
+                  hintText: addDescription,
+                  hintStyle: getRegularStyle(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    fontSize: 20,
+                  ),
+                  textStyle: getRegularStyle(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    fontSize: 20,
+                  ),
                 ),
-              ),
-              const Gap(n10),
-              BorderlessTextField(
-                controller: descriptionController,
-                maxLines: 2,
-                maxLengh: n75.toInt(),
-                hintText: addDescription,
-                hintStyle: getRegularStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: 20,
-                ),
-                textStyle: getRegularStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: 20,
-                ),
-              ),
-              const Gap(n10),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: 1,
-                  physics: const ScrollPhysics(),
-                  itemBuilder: (BuildContext context, int index) {
-                    return Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Checkbox(
-                          value: isChecked,
-                          activeColor: Theme.of(context).colorScheme.primary,
-                          onChanged: (newValue) {
-                            setState(() {
-                              isChecked = newValue;
-                            });
-                          },
-                        ),
-                        const Gap(2),
-                        Expanded(
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: BorderlessTextField(
-                              controller: itemController,
-                              autofocus: true,
-                              hintText: listTitle,
-                              hintStyle: getRegularStyle(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontSize: 15,
+                const Gap(10),
+                Expanded(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: ListView.builder(
+                      controller: controller,
+                      itemCount: 1,
+                      physics: const ScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomCheckbox(
+                              value: isChecked,
+                              activeColor:
+                                  Theme.of(context).colorScheme.primary,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  isChecked = newValue;
+                                });
+                              },
+                            ),
+                            const Gap(5),
+                            Expanded(
+                              child: BorderlessTextField(
+                                controller: itemController,
+                                autofocus: true,
+                                hintText: addItem,
+                                hintStyle: getRegularStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer,
+                                  fontSize: 15,
+                                ),
+                                textStyle: getRegularStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer,
+                                  fontSize: 20,
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              )
-            ],
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

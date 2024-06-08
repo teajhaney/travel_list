@@ -205,3 +205,46 @@ class DottedBorderContainer extends StatelessWidget {
         ));
   }
 }
+
+
+//=== CUSTOM CHECKBOX ===
+class CustomCheckbox extends StatelessWidget {
+  final bool value;
+  final Color activeColor;
+  final ValueChanged<bool> onChanged;
+
+  const CustomCheckbox({
+    super.key,
+    required this.value,
+    required this.activeColor,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => onChanged(!value),
+      child: Container(
+        width: 18.0,
+        height: 18.0,
+        decoration: BoxDecoration(
+          color: value ? activeColor : Colors.transparent,
+          borderRadius: const BorderRadius.all(Radius.circular(n5)),
+          border: Border.all(
+            color: activeColor,
+            width: 1,
+          ),
+        ),
+        child: value
+            ? const Center(
+                child: Icon(
+                  Icons.check,
+                  size: 12.0,
+                  color: Colors.white,
+                ),
+              )
+            : null,
+      ),
+    );
+  }
+}

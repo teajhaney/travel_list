@@ -56,10 +56,12 @@ class _TravelListScreenState extends State<TravelListScreen> {
           onPressed: () {
             Platform.isAndroid
                 ? showMaterialModalBottomSheet(
+                    enableDrag: false,
                     context: context,
                     builder: (context) => const ButtomSheetContent(),
                   )
                 : showCupertinoModalBottomSheet(
+					enableDrag: false,
                     context: context,
                     builder: (context) => const ButtomSheetContent(),
                   );

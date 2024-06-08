@@ -1,4 +1,5 @@
 const double n0 = 0;
+const double n2 = 2;
 const double n5 = 5;
 const double n8 = 8;
 const double n10 = 10;
