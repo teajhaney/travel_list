@@ -43,6 +43,8 @@ class _TravelListContentState extends State<TravelListContent> {
                           fontSize: n20,
                           color: white,
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       subtitle: Text(
                         'To decorate an image asset in Flutter, you can use the Container widget to wrap.',

@@ -93,15 +93,16 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
   Widget build(BuildContext context) {
     return Material(
       child: SafeArea(
-        child: SingleChildScrollView(
-          physics: const ScrollPhysics(),
-          controller: controller,
-          child: Padding(
-            padding: const EdgeInsets.all(
-              n10,
-            ),
+        child: Padding(
+          padding: const EdgeInsets.all(
+            n10,
+          ),
+          child: SingleChildScrollView(
+            controller: controller,
+            physics: const ScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -149,12 +150,11 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
                 const Gap(n10),
                 BorderlessTextField(
                   controller: titleController,
-                  maxLines: 1,
-                  maxLengh: n20.toInt(),
                   autofocus: true,
                   hintText: listTitle,
                   hintStyle: getRegularStyle(
-                    color: Theme.of(context).colorScheme.primaryContainer,
+                    color:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.3),
                     fontSize: 30,
                   ),
                   textStyle: getRegularStyle(
@@ -167,7 +167,8 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
                   controller: descriptionController,
                   hintText: addDescription,
                   hintStyle: getRegularStyle(
-                    color: Theme.of(context).colorScheme.primaryContainer,
+                    color:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.3),
                     fontSize: 20,
                   ),
                   textStyle: getRegularStyle(
@@ -175,53 +176,48 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
                     fontSize: 20,
                   ),
                 ),
-                const Gap(10),
-                Expanded(
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: ListView.builder(
-                      controller: controller,
-                      itemCount: 1,
-                      physics: const ScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomCheckbox(
-                              value: isChecked,
-                              activeColor:
-                                  Theme.of(context).colorScheme.primary,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  isChecked = newValue;
-                                });
-                              },
-                            ),
-                            const Gap(5),
-                            Expanded(
-                              child: BorderlessTextField(
-                                controller: itemController,
-                                autofocus: true,
-                                hintText: addItem,
-                                hintStyle: getRegularStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .primaryContainer,
-                                  fontSize: 15,
-                                ),
-                                textStyle: getRegularStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .primaryContainer,
-                                  fontSize: 20,
-                                ),
+                SizedBox(
+                  height: 500,
+                  child: ListView.builder(
+                    controller: controller,
+                    itemCount: 20,
+                    physics: const ScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Row(
+                        children: [
+                          CustomCheckbox(
+                            value: isChecked,
+                            activeColor: Theme.of(context).colorScheme.primary,
+                            onChanged: (newValue) {
+                              setState(() {
+                                isChecked = newValue;
+                              });
+                            },
+                          ),
+                          const Gap(5),
+                          Expanded(
+                            child: BorderlessTextField(
+                              controller: itemController,
+                              autofocus: true,
+                              hintText: addItem,
+                              hintStyle: getRegularStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withOpacity(0.3),
+                                fontSize: 15,
+                              ),
+                              textStyle: getRegularStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer,
+                                fontSize: 20,
                               ),
                             ),
-                          ],
-                        );
-                      },
-                    ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 )
               ],
