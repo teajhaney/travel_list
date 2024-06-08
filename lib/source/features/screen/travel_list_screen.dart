@@ -20,6 +20,7 @@ class _TravelListScreenState extends State<TravelListScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+		resizeToAvoidBottomInset: true,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

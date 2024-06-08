@@ -157,9 +157,11 @@ class BorderlessTextField extends StatelessWidget {
       controller: controller,
       autofocus: autofocus,
       autocorrect: true,
-      maxLines: maxLines,
-      maxLength: maxLengh,
+	  scrollPhysics: const AlwaysScrollableScrollPhysics(),
+      maxLines: null,
+      maxLength: null,
       style: textStyle,
+	  keyboardType: TextInputType.multiline,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(n0),
@@ -205,7 +207,6 @@ class DottedBorderContainer extends StatelessWidget {
         ));
   }
 }
-
 
 //=== CUSTOM CHECKBOX ===
 class CustomCheckbox extends StatelessWidget {

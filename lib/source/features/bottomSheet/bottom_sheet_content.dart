@@ -176,12 +176,12 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
                     fontSize: 20,
                   ),
                 ),
-                SizedBox(
-                  height: 500,
+                Flexible(
                   child: ListView.builder(
                     controller: controller,
                     itemCount: 20,
-                    physics: const ScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
                     itemBuilder: (BuildContext context, int index) {
                       return Row(
                         children: [
