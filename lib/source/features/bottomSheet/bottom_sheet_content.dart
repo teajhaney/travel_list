@@ -150,6 +150,7 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
                 const Gap(n10),
                 BorderlessTextField(
                   controller: titleController,
+                  maxLines: 1,
                   autofocus: true,
                   hintText: listTitle,
                   hintStyle: getRegularStyle(
@@ -183,74 +184,41 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
                     itemCount: 20,
                     shrinkWrap: true,
                     itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        leading: CustomCheckbox(
-                          value: isChecked,
-                          activeColor: Theme.of(context).colorScheme.primary,
-                          onChanged: (newValue) {
-                            setState(() {
-                              isChecked = newValue;
-                            });
-                          },
-                        ),
-                        title: Expanded(
-                          child: BorderlessTextField(
-                            controller: itemController,
-                            autofocus: true,
-                            hintText: addItem,
-                            maxLines: 1,
-                            hintStyle: getRegularStyle(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primary
-                                  .withOpacity(0.3),
-                              fontSize: 15,
-                            ),
-                            textStyle: getRegularStyle(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer,
-                              fontSize: 20,
+                      return Row(
+                        children: [
+                          CustomCheckbox(
+                            value: isChecked,
+                            activeColor: Theme.of(context).colorScheme.primary,
+                            onChanged: (newValue) {
+                              setState(() {
+                                isChecked = newValue;
+                              });
+                            },
+                          ),
+                          const Gap(5),
+                          Expanded(
+                            child: BorderlessTextField(
+                              controller: itemController,
+                              autofocus: true,
+                              hintText: addItem,
+                              maxLines: 1,
+                              hintStyle: getRegularStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withOpacity(0.3),
+                                fontSize: 15,
+                              ),
+                              textStyle: getRegularStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer,
+                                fontSize: 20,
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       );
-
-                      //   Row(
-                      //     children: [
-                      //       CustomCheckbox(
-                      //         value: isChecked,
-                      //         activeColor: Theme.of(context).colorScheme.primary,
-                      //         onChanged: (newValue) {
-                      //           setState(() {
-                      //             isChecked = newValue;
-                      //           });
-                      //         },
-                      //       ),
-                      //       const Gap(5),
-                      //       Expanded(
-                      //         child: BorderlessTextField(
-                      //           controller: itemController,
-                      //           autofocus: true,
-                      //           hintText: addItem,
-                      //           maxLines: 1,
-                      //           hintStyle: getRegularStyle(
-                      //             color: Theme.of(context)
-                      //                 .colorScheme
-                      //                 .primary
-                      //                 .withOpacity(0.3),
-                      //             fontSize: 15,
-                      //           ),
-                      //           textStyle: getRegularStyle(
-                      //             color: Theme.of(context)
-                      //                 .colorScheme
-                      //                 .primaryContainer,
-                      //             fontSize: 20,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   );
                     },
                   ),
                 )
