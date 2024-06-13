@@ -20,7 +20,7 @@ class _TravelListScreenState extends State<TravelListScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-		resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomInset: true,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -58,11 +58,13 @@ class _TravelListScreenState extends State<TravelListScreen> {
             Platform.isAndroid
                 ? showMaterialModalBottomSheet(
                     enableDrag: false,
+                    expand: true,
                     context: context,
                     builder: (context) => const ButtomSheetContent(),
                   )
                 : showCupertinoModalBottomSheet(
-					enableDrag: false,
+                    enableDrag: false,
+                    expand: true,
                     context: context,
                     builder: (context) => const ButtomSheetContent(),
                   );

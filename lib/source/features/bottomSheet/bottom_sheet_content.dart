@@ -92,10 +92,11 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
 
   @override
   Widget build(BuildContext context) {
+    double bottomInsets = MediaQuery.of(context).viewInsets.bottom;
     return Form(
-      child: Material(
-        child: SafeArea(
-          child: Padding(
+      child: SafeArea(
+        child: Scaffold(
+          body: Padding(
             padding: const EdgeInsets.all(
               n10,
             ),
@@ -152,7 +153,6 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
                   const Gap(n10),
                   BorderlessTextField(
                     controller: titleController,
-                    maxLines: 1,
                     autofocus: true,
                     hintText: listTitle,
                     hintStyle: getRegularStyle(
@@ -187,10 +187,11 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
                     child: ListView.builder(
                       controller: scrollController,
                       physics: const BouncingScrollPhysics(),
-                      itemCount: 20,
+                      itemCount: 1,
                       shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
                         return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             CustomCheckbox(
                               value: isChecked,

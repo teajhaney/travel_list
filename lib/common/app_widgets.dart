@@ -1,6 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:ffi';
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
@@ -137,10 +134,9 @@ class BorderlessTextField extends StatelessWidget {
   final TextEditingController controller;
   final TextStyle? hintStyle;
   final TextStyle? textStyle;
-  final int? maxLines;
-  final int? maxLengh;
+
   final bool autofocus;
-//   final FocusNode focusNode;
+
 //   final Function(String)? onChanged;
 
   const BorderlessTextField({
@@ -149,20 +145,18 @@ class BorderlessTextField extends StatelessWidget {
     required this.controller,
     this.hintStyle,
     this.textStyle,
-    this.maxLines,
-    this.maxLengh,
     this.autofocus = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      scrollController: ScrollController(),
       controller: controller,
       autofocus: autofocus,
       autocorrect: true,
+      maxLines: null,
       scrollPhysics: const AlwaysScrollableScrollPhysics(),
-      maxLines: maxLines,
-      maxLength: maxLengh,
       style: textStyle,
       keyboardType: TextInputType.multiline,
       textCapitalization: TextCapitalization.sentences,
@@ -170,7 +164,7 @@ class BorderlessTextField extends StatelessWidget {
         contentPadding: const EdgeInsets.all(n0),
         hintText: hintText,
         hintStyle: hintStyle,
-        fillColor: Theme.of(context).colorScheme.surface,
+        fillColor: Theme.of(context).scaffoldBackgroundColor,
         border: InputBorder.none,
         focusedBorder: InputBorder.none,
         enabledBorder: InputBorder.none,
