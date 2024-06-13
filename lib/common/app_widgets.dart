@@ -161,7 +161,9 @@ class BorderlessTextField extends StatelessWidget {
       keyboardType: TextInputType.multiline,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
-        contentPadding: const EdgeInsets.all(n0),
+        contentPadding: const EdgeInsets.fromLTRB(
+            n0, n0, n0, n10), // Remove the default padding
+        isDense: true, //
         hintText: hintText,
         hintStyle: hintStyle,
         fillColor: Theme.of(context).scaffoldBackgroundColor,
@@ -223,8 +225,8 @@ class CustomCheckbox extends StatelessWidget {
     return GestureDetector(
       onTap: () => onChanged(!value),
       child: Container(
-        width: 18.0,
-        height: 18.0,
+        width: n20,
+        height: n20,
         decoration: BoxDecoration(
           color: value ? activeColor : Colors.transparent,
           borderRadius: const BorderRadius.all(Radius.circular(n5)),

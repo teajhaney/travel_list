@@ -92,7 +92,6 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
 
   @override
   Widget build(BuildContext context) {
-    double bottomInsets = MediaQuery.of(context).viewInsets.bottom;
     return Form(
       child: SafeArea(
         child: Scaffold(
@@ -167,7 +166,7 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
                       fontSize: 30,
                     ),
                   ),
-                  const Gap(n10),
+                  const Gap(n20),
                   BorderlessTextField(
                     controller: descriptionController,
                     hintText: addDescription,
@@ -183,51 +182,51 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
                       fontSize: 20,
                     ),
                   ),
-                  Flexible(
-                    child: ListView.builder(
-                      controller: scrollController,
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: 1,
-                      shrinkWrap: true,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomCheckbox(
-                              value: isChecked,
-                              activeColor:
-                                  Theme.of(context).colorScheme.primary,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  isChecked = newValue;
-                                });
-                              },
-                            ),
-                            const Gap(5),
-                            Expanded(
-                              child: BorderlessTextField(
-                                controller: itemController,
-                                autofocus: true,
-                                hintText: addItem,
-                                hintStyle: getRegularStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .primary
-                                      .withOpacity(0.3),
-                                  fontSize: 15,
-                                ),
-                                textStyle: getRegularStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .primaryContainer,
-                                  fontSize: 20,
-                                ),
+                  const Gap(n20),
+                  ListView.builder(
+                    controller: scrollController,
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: 50,
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Row(
+                        textBaseline: TextBaseline.alphabetic,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        children: [
+                          CustomCheckbox(
+                            value: isChecked,
+                            activeColor: Theme.of(context).colorScheme.primary,
+                            onChanged: (newValue) {
+                              setState(() {
+                                isChecked = newValue;
+                              });
+                            },
+                          ),
+                          const Gap(n10),
+                          Expanded(
+                            child: BorderlessTextField(
+                              controller: itemController,
+                              autofocus: true,
+                              hintText: addItem,
+                              hintStyle: getRegularStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withOpacity(0.3),
+                                fontSize: 20,
+                              ),
+                              textStyle: getRegularStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer,
+                                fontSize: 20,
                               ),
                             ),
-                          ],
-                        );
-                      },
-                    ),
+                          ),
+                          const Gap(n20),
+                        ],
+                      );
+                    },
                   )
                 ],
               ),
