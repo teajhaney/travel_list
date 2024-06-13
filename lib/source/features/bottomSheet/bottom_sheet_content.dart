@@ -22,7 +22,8 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController itemController = TextEditingController();
 
-  final ScrollController controller = ScrollController();
+  final ScrollController scrollController = ScrollController();
+
   ImageProvider? backgroundImage;
 
   bool isChecked = false;
@@ -83,146 +84,152 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
 
   @override
   void dispose() {
+    super.dispose();
     titleController.dispose();
     descriptionController.dispose();
-    controller.dispose();
-    super.dispose();
+    scrollController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(
-            n10,
-          ),
-          child: SingleChildScrollView(
-            controller: controller,
-            physics: const ScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      color: Theme.of(context).colorScheme.primaryContainer,
-                      onPressed: () {},
-                      icon: const Icon(Icons.favorite_outline),
-                    ),
-                    Text(
-                      addList,
-                      style: getBoldStyle(
-                        fontSize: 20,
+    return Form(
+      child: Material(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(
+              n10,
+            ),
+            child: SingleChildScrollView(
+              controller: scrollController,
+              physics: const ScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
                         color: Theme.of(context).colorScheme.primaryContainer,
+                        onPressed: () {},
+                        icon: const Icon(Icons.favorite_outline),
                       ),
+                      Text(
+                        addList,
+                        style: getBoldStyle(
+                          fontSize: 20,
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                        ),
+                      ),
+                      IconButton(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        onPressed: () {},
+                        icon: const Icon(Icons.more_vert),
+                      )
+                    ],
+                  ),
+                  const Gap(n10),
+                  DottedBorderContainer(
+                    decorationImage: backgroundImage != null
+                        ? DecorationImage(
+                            image: backgroundImage!,
+                            fit: BoxFit.cover,
+                          )
+                        : null,
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    child: showIconButton
+                        ? Center(
+                            child: IconButton(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .primaryContainer
+                                .withOpacity(0.5),
+                            onPressed: pickImage,
+                            icon: const Icon(Icons.add),
+                          ))
+                        : null,
+                  ),
+                  const Gap(n10),
+                  BorderlessTextField(
+                    controller: titleController,
+                    maxLines: 1,
+                    autofocus: true,
+                    hintText: listTitle,
+                    hintStyle: getRegularStyle(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.3),
+                      fontSize: 30,
                     ),
-                    IconButton(
+                    textStyle: getRegularStyle(
                       color: Theme.of(context).colorScheme.primaryContainer,
-                      onPressed: () {},
-                      icon: const Icon(Icons.more_vert),
-                    )
-                  ],
-                ),
-                const Gap(n10),
-                DottedBorderContainer(
-                  decorationImage: backgroundImage != null
-                      ? DecorationImage(
-                          image: backgroundImage!,
-                          fit: BoxFit.cover,
-                        )
-                      : null,
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  child: showIconButton
-                      ? Center(
-                          child: IconButton(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primaryContainer
-                              .withOpacity(0.5),
-                          onPressed: pickImage,
-                          icon: const Icon(Icons.add),
-                        ))
-                      : null,
-                ),
-                const Gap(n10),
-                BorderlessTextField(
-                  controller: titleController,
-                  maxLines: 1,
-                  autofocus: true,
-                  hintText: listTitle,
-                  hintStyle: getRegularStyle(
-                    color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.3),
-                    fontSize: 30,
+                      fontSize: 30,
+                    ),
                   ),
-                  textStyle: getRegularStyle(
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                    fontSize: 30,
+                  const Gap(n10),
+                  BorderlessTextField(
+                    controller: descriptionController,
+                    hintText: addDescription,
+                    hintStyle: getRegularStyle(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.3),
+                      fontSize: 20,
+                    ),
+                    textStyle: getRegularStyle(
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      fontSize: 20,
+                    ),
                   ),
-                ),
-                const Gap(n10),
-                BorderlessTextField(
-                  controller: descriptionController,
-                  hintText: addDescription,
-                  hintStyle: getRegularStyle(
-                    color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.3),
-                    fontSize: 20,
-                  ),
-                  textStyle: getRegularStyle(
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                    fontSize: 20,
-                  ),
-                ),
-                Flexible(
-                  child: ListView.builder(
-                    controller: controller,
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: 20,
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Row(
-                        children: [
-                          CustomCheckbox(
-                            value: isChecked,
-                            activeColor: Theme.of(context).colorScheme.primary,
-                            onChanged: (newValue) {
-                              setState(() {
-                                isChecked = newValue;
-                              });
-                            },
-                          ),
-                          const Gap(5),
-                          Expanded(
-                            child: BorderlessTextField(
-                              controller: itemController,
-                              autofocus: true,
-                              hintText: addItem,
-                              maxLines: 1,
-                              hintStyle: getRegularStyle(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primary
-                                    .withOpacity(0.3),
-                                fontSize: 15,
-                              ),
-                              textStyle: getRegularStyle(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primaryContainer,
-                                fontSize: 20,
+                  Flexible(
+                    child: ListView.builder(
+                      controller: scrollController,
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: 20,
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Row(
+                          children: [
+                            CustomCheckbox(
+                              value: isChecked,
+                              activeColor:
+                                  Theme.of(context).colorScheme.primary,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  isChecked = newValue;
+                                });
+                              },
+                            ),
+                            const Gap(5),
+                            Expanded(
+                              child: BorderlessTextField(
+                                controller: itemController,
+                                autofocus: true,
+                                hintText: addItem,
+                                hintStyle: getRegularStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primary
+                                      .withOpacity(0.3),
+                                  fontSize: 15,
+                                ),
+                                textStyle: getRegularStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer,
+                                  fontSize: 20,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                )
-              ],
+                          ],
+                        );
+                      },
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

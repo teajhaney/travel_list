@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:ffi';
 
 import 'package:dotted_border/dotted_border.dart';
@@ -139,21 +140,23 @@ class BorderlessTextField extends StatelessWidget {
   final int? maxLines;
   final int? maxLengh;
   final bool autofocus;
+//   final FocusNode focusNode;
+//   final Function(String)? onChanged;
 
   const BorderlessTextField({
     super.key,
     required this.hintText,
     required this.controller,
     this.hintStyle,
-    this.autofocus = false,
+    this.textStyle,
     this.maxLines,
     this.maxLengh,
-    this.textStyle,
+    this.autofocus = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       autofocus: autofocus,
       autocorrect: true,
