@@ -24,4 +24,4 @@ const String location = 'Location';
 const String addList = 'Add a List';
 const String listTitle = 'Let\'s start with a Title';
 const String addDescription = 'Add a brief discription';
-const String addItem = 'Tap here to Add an item for your trip';
+const String addItem = 'Tap here to Add an item.';
