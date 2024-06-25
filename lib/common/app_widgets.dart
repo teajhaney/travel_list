@@ -134,6 +134,7 @@ class BorderlessTextField extends StatelessWidget {
   final TextEditingController controller;
   final TextStyle? hintStyle;
   final TextStyle? textStyle;
+  final Function(String)? onSubmitted;
 
   final bool autofocus;
 
@@ -145,12 +146,12 @@ class BorderlessTextField extends StatelessWidget {
     required this.controller,
     this.hintStyle,
     this.textStyle,
-    this.autofocus = false,
+    this.autofocus = false,  this.onSubmitted,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return TextField(
       scrollController: ScrollController(),
       controller: controller,
       autofocus: autofocus,
@@ -158,8 +159,10 @@ class BorderlessTextField extends StatelessWidget {
       maxLines: null,
       scrollPhysics: const AlwaysScrollableScrollPhysics(),
       style: textStyle,
+	  textInputAction: TextInputAction.done,
       keyboardType: TextInputType.multiline,
       textCapitalization: TextCapitalization.sentences,
+	  onSubmitted: onSubmitted,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.fromLTRB(
             n0, n0, n0, n10), // Remove the default padding

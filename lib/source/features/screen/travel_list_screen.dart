@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'package:travel_list/common/common_export.dart';
+import 'package:travel_list/source/features/bottomSheet/bottom_sheet_export.dart';
 
 import '../../features_export.dart';
 
@@ -60,13 +61,13 @@ class _TravelListScreenState extends State<TravelListScreen> {
                     enableDrag: false,
                     expand: true,
                     context: context,
-                    builder: (context) => const ButtomSheetContent(),
+                    builder: (context) => const BottomSheetContent(),
                   )
                 : showCupertinoModalBottomSheet(
                     enableDrag: false,
                     expand: true,
                     context: context,
-                    builder: (context) => const ButtomSheetContent(),
+                    builder: (context) => const BottomSheetContent(),
                   );
           },
           child: const Icon(Icons.add),

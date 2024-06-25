@@ -2,33 +2,36 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
+
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../common/common_export.dart';
 
-class ButtomSheetContent extends StatefulWidget {
-  const ButtomSheetContent({
-    super.key,
-  });
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../bottomSheet/bottom_sheet_export.dart';
+
+class BottomSheetContent extends ConsumerStatefulWidget {
+  const BottomSheetContent({super.key});
 
   @override
-  State<ButtomSheetContent> createState() => _ButtomSheetContentState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _BottomSheetContentState();
 }
 
-class _ButtomSheetContentState extends State<ButtomSheetContent> {
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController itemController = TextEditingController();
-
+class _BottomSheetContentState extends ConsumerState<BottomSheetContent> {
+  final TextEditingController titleTextController = TextEditingController();
+  final TextEditingController descriptionTextController =
+      TextEditingController();
+  final TextEditingController itemTextController = TextEditingController();
   final ScrollController scrollController = ScrollController();
-
   ImageProvider? backgroundImage;
 
   bool isChecked = false;
 
   bool showIconButton = true;
+  bool _isEditing = true; // Condition to toggle between TextField and Text
+
   @override
   void initState() {
     super.initState();
@@ -39,59 +42,39 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
     await Permission.storage.request();
   }
 
-  Future<void> pickImage() async {
-    final imagePicker = ImagePicker();
-    final imageCropper = ImageCropper();
-    final XFile? pickedImage =
-        await imagePicker.pickImage(source: ImageSource.gallery);
-    if (pickedImage != null) {
-      if (!mounted) return;
-      // Crop the image
-      CroppedFile? croppedFile = await imageCropper.cropImage(
-        sourcePath: pickedImage.path,
-        aspectRatioPresets: [
-          CropAspectRatioPreset.square,
-          CropAspectRatioPreset.ratio3x2,
-          CropAspectRatioPreset.original,
-          CropAspectRatioPreset.ratio4x3,
-          CropAspectRatioPreset.ratio16x9
-          // You can add other aspect ratio presets (e.g., CropAspectRatioPreset.ratio16x9)
-        ],
-        uiSettings: [
-          AndroidUiSettings(
-            toolbarTitle: 'Crop Image',
-            toolbarColor: Theme.of(context).colorScheme.primaryContainer,
-            toolbarWidgetColor: Colors.white,
-            initAspectRatio: CropAspectRatioPreset.original,
-            lockAspectRatio: false,
-          ),
-          IOSUiSettings(
-            title: 'Crop Image',
-          )
-        ],
-      );
-      if (croppedFile != null) {
-        setState(() {
-          backgroundImage = FileImage(File(croppedFile.path));
-          showIconButton = false;
-        });
-      } else {
-        if (croppedFile == null) return;
-        // Handle cropping cancellation or error
-      }
+  Future<void> _pickImage() async {
+    File? pickedFile = await pickAndCropImage(context);
+    if (pickedFile != null) {
+      setState(() {
+        backgroundImage = FileImage(pickedFile);
+        showIconButton = false;
+      });
     }
+  }
+
+  void _toggleEditing() {
+    setState(() {
+      _isEditing = !_isEditing;
+      //   if (_isEditing) {
+      //     itemTextController.text = ref.read(textProvider);
+      //   }
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
-    titleController.dispose();
-    descriptionController.dispose();
+    titleTextController.dispose();
+    descriptionTextController.dispose();
+    itemTextController.dispose();
+
     scrollController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final String savedText = ref.watch(textProvider);
+    final List<String> items = ref.watch(itemListProvider);
     return Form(
       child: SafeArea(
         child: Scaffold(
@@ -144,14 +127,14 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
                                 .colorScheme
                                 .primaryContainer
                                 .withOpacity(0.5),
-                            onPressed: pickImage,
+                            onPressed: _pickImage,
                             icon: const Icon(Icons.add),
                           ))
                         : null,
                   ),
                   const Gap(n10),
                   BorderlessTextField(
-                    controller: titleController,
+                    controller: titleTextController,
                     autofocus: true,
                     hintText: listTitle,
                     hintStyle: getRegularStyle(
@@ -168,7 +151,7 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
                   ),
                   const Gap(n20),
                   BorderlessTextField(
-                    controller: descriptionController,
+                    controller: descriptionTextController,
                     hintText: addDescription,
                     hintStyle: getRegularStyle(
                       color: Theme.of(context)
@@ -186,46 +169,66 @@ class _ButtomSheetContentState extends State<ButtomSheetContent> {
                   ListView.builder(
                     controller: scrollController,
                     physics: const BouncingScrollPhysics(),
-                    itemCount: 1,
+                    itemCount: items.length + 1,
                     shrinkWrap: true,
                     itemBuilder: (BuildContext context, int index) {
                       return Row(
-                        textBaseline: TextBaseline.alphabetic,
-                        crossAxisAlignment: CrossAxisAlignment.baseline,
-                        children: [
-                          CustomCheckbox(
-                            value: isChecked,
-                            activeColor: Theme.of(context).colorScheme.primary,
-                            onChanged: (newValue) {
-                              setState(() {
-                                isChecked = newValue;
-                              });
-                            },
-                          ),
-                          const Gap(n10),
-                          Expanded(
-                            child: BorderlessTextField(
-                              controller: itemController,
-                              autofocus: true,
-                              hintText: addItem,
-                              hintStyle: getRegularStyle(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primary
-                                    .withOpacity(0.3),
-                                fontSize: 20,
-                              ),
-                              textStyle: getRegularStyle(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primaryContainer,
-                                fontSize: 20,
-                              ),
+                          textBaseline: TextBaseline.alphabetic,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          children: [
+                            CustomCheckbox(
+                              value: isChecked,
+                              activeColor:
+                                  Theme.of(context).colorScheme.primary,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  isChecked = newValue;
+                                });
+                              },
                             ),
-                          ),
-                          const Gap(n20),
-                        ],
-                      );
+                            const Gap(n10),
+                            _isEditing
+                                ? Expanded(
+                                    child: BorderlessTextField(
+                                      onSubmitted: (value) {
+                                        ref
+                                            .read(textProvider.notifier)
+                                            .saveText(itemTextController.text);
+                                        setState(() {
+                                          _isEditing = false;
+                                        });
+                                      },
+                                      controller: itemTextController,
+                                      autofocus: true,
+                                      hintText: addItem,
+                                      hintStyle: getRegularStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary
+                                            .withOpacity(0.3),
+                                        fontSize: 20,
+                                      ),
+                                      textStyle: getRegularStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primaryContainer,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  )
+                                : GestureDetector(
+                                    onTap: _toggleEditing,
+                                    child: Text(
+                                      savedText,
+                                      style: getRegularStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primaryContainer,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  )
+                          ]);
                     },
                   )
                 ],
