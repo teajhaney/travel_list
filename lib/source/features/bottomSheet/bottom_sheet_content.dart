@@ -73,8 +73,8 @@ class _BottomSheetContentState extends ConsumerState<BottomSheetContent> {
 
   @override
   Widget build(BuildContext context) {
-    final String savedText = ref.watch(textProvider);
-    final List<String> items = ref.watch(itemListProvider);
+    // final String savedText = ref.watch(textProvider);
+    final List<ListItem> items = ref.watch(itemProvider);
     return Form(
       child: SafeArea(
         child: Scaffold(
@@ -172,63 +172,110 @@ class _BottomSheetContentState extends ConsumerState<BottomSheetContent> {
                     itemCount: items.length + 1,
                     shrinkWrap: true,
                     itemBuilder: (BuildContext context, int index) {
-                      return Row(
+                      if (index < items.length) {
+                        final item = items[index];
+                        return Row(
+                            textBaseline: TextBaseline.alphabetic,
+                            crossAxisAlignment: CrossAxisAlignment.baseline,
+                            children: [
+                              CustomCheckbox(
+                                value: item.isChecked,
+                                activeColor:
+                                    Theme.of(context).colorScheme.primary,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    isChecked = newValue;
+                                  });
+                                },
+                              ),
+                              const Gap(n10),
+                              _isEditing
+                                  ? Expanded(
+                                      child: BorderlessTextField(
+                                        onSubmitted: (value) {
+                                          ref
+                                              .read(textProvider.notifier)
+                                              .saveText(
+                                                  itemTextController.text);
+                                          ref
+                                              .read(itemProvider.notifier)
+                                              .addItem(itemTextController.text);
+
+                                          setState(() {
+                                            _isEditing = false;
+                                          });
+                                        },
+                                        controller: itemTextController,
+                                        autofocus: true,
+                                        hintText: addItem,
+                                        hintStyle: getRegularStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                              .withOpacity(0.3),
+                                          fontSize: n20,
+                                        ),
+                                        textStyle: getRegularStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primaryContainer,
+                                          fontSize: n20,
+                                        ),
+                                      ),
+                                    )
+                                  : GestureDetector(
+                                      onTap: _toggleEditing,
+                                      child: Text(
+                                        item.text,
+                                        style: getRegularStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primaryContainer,
+                                          fontSize: n20,
+                                        ),
+                                      ),
+                                    ),
+                            ]);
+                      } else {
+                        return Row(
                           textBaseline: TextBaseline.alphabetic,
                           crossAxisAlignment: CrossAxisAlignment.baseline,
                           children: [
                             CustomCheckbox(
-                              value: isChecked,
+                              value: false,
                               activeColor:
                                   Theme.of(context).colorScheme.primary,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  isChecked = newValue;
-                                });
-                              },
+                              onChanged: (newValue) {},
                             ),
                             const Gap(n10),
-                            _isEditing
-                                ? Expanded(
-                                    child: BorderlessTextField(
-                                      onSubmitted: (value) {
-                                        ref
-                                            .read(textProvider.notifier)
-                                            .saveText(itemTextController.text);
-                                        setState(() {
-                                          _isEditing = false;
-                                        });
-                                      },
-                                      controller: itemTextController,
-                                      autofocus: true,
-                                      hintText: addItem,
-                                      hintStyle: getRegularStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary
-                                            .withOpacity(0.3),
-                                        fontSize: 20,
-                                      ),
-                                      textStyle: getRegularStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primaryContainer,
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  )
-                                : GestureDetector(
-                                    onTap: _toggleEditing,
-                                    child: Text(
-                                      savedText,
-                                      style: getRegularStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primaryContainer,
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  )
-                          ]);
+                            Expanded(
+                              child: BorderlessTextField(
+                                onSubmitted: (value) {
+                                  ref
+                                      .read(itemProvider.notifier)
+                                      .addItem(itemTextController.text);
+                                },
+                                controller: itemTextController,
+                                autofocus: true,
+                                hintText: addItem,
+                                hintStyle: getRegularStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primary
+                                      .withOpacity(0.3),
+                                  fontSize: 20,
+                                ),
+                                textStyle: getRegularStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      }
                     },
                   )
                 ],
