@@ -26,17 +26,17 @@ class TextStateNotifier extends StateNotifier<String> {
 //===PROVIDER FOR LIST====
 
 // Provider for managing list of items
-// final itemProvider = StateNotifierProvider<ItemListStateNotifier, List<ListItem>>((ref) {
-//   return ItemListStateNotifier();
-// });
+final itemProvider = StateNotifierProvider<ItemListStateNotifier, List<ListItem>>((ref) {
+  return ItemListStateNotifier();
+});
 
-// // StateNotifier for managing list of items
-// class ItemListStateNotifier extends StateNotifier<List<ListItem>> {
-//   ItemListStateNotifier() : super([]);
+// StateNotifier for managing list of items
+class ItemListStateNotifier extends StateNotifier<List<ListItem>> {
+  ItemListStateNotifier() : super([]);
 
-//   void addItem(String text) {
-//     state = [...state, ListItem(text: text)];
-//   }
+  void addItem(String text) {
+    state = [...state, ListItem(text: text)];
+  }
 
 
   
