@@ -182,7 +182,7 @@ class _BottomSheetContentState extends ConsumerState<BottomSheetContent> {
                                 value: item.isChecked,
                                 activeColor:
                                     Theme.of(context).colorScheme.primary,
-                                onChanged: (newValue) {
+                                 onChanged: (newValue) {
                                   setState(() {
                                     isChecked = newValue;
                                   });
