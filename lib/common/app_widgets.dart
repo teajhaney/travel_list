@@ -134,6 +134,7 @@ class BorderlessTextField extends StatelessWidget {
   final TextEditingController controller;
   final TextStyle? hintStyle;
   final TextStyle? textStyle;
+  final bool enabled;
   final Function(String)? onSubmitted;
 
   final bool autofocus;
@@ -145,6 +146,7 @@ class BorderlessTextField extends StatelessWidget {
     required this.hintText,
     required this.controller,
     this.hintStyle,
+	this.enabled=false,
     this.textStyle,
     this.autofocus = false,
     this.onSubmitted,
@@ -157,7 +159,8 @@ class BorderlessTextField extends StatelessWidget {
       controller: controller,
       autofocus: autofocus,
       autocorrect: true,
-      maxLines: null,
+      maxLines: 1,
+	  enabled:enabled,
       scrollPhysics: const AlwaysScrollableScrollPhysics(),
       style: textStyle,
       textInputAction: TextInputAction.done,
