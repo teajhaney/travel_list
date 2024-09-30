@@ -24,7 +24,6 @@ class _BottomSheetContentState extends ConsumerState<BottomSheetContent> {
   final TextEditingController descriptionTextController =
       TextEditingController();
   final TextEditingController itemTextController = TextEditingController();
-  final TextEditingController NewItemTextController = TextEditingController();
   final ScrollController scrollController = ScrollController();
   ImageProvider? backgroundImage;
 
@@ -32,13 +31,11 @@ class _BottomSheetContentState extends ConsumerState<BottomSheetContent> {
 
   bool showIconButton = true;
   bool _isEditing = true; // Condition to toggle between TextField and Text
-  bool _isEditingNewItem = false;
 
   @override
   void initState() {
     super.initState();
     requestStoragePermission();
-    NewItemTextController.text = "";
   }
 
   Future<void> requestStoragePermission() async {
@@ -64,15 +61,6 @@ class _BottomSheetContentState extends ConsumerState<BottomSheetContent> {
     });
   }
 
-  void _toggleEditingNew() {
-    setState(() {
-      _isEditingNewItem = !_isEditingNewItem;
-      //   if (_isEditing) {
-      //     itemTextController.text = ref.read(textProvider);
-      //   }
-    });
-  }
-
   @override
   void dispose() {
     super.dispose();
@@ -86,11 +74,7 @@ class _BottomSheetContentState extends ConsumerState<BottomSheetContent> {
   @override
   Widget build(BuildContext context) {
     // final String savedText = ref.watch(textProvider);
-    // final List<ListItem> items = ref.watch(itemProvider);
-    final items = ref
-        .watch(itemProvider); // Get the current list of items from the provider
-    final texts = ref
-        .watch(textProvider); // Get the current list of texts from the provider
+    final List<ListItem> items = ref.watch(itemProvider);
     return Form(
       child: SafeArea(
         child: Scaffold(
@@ -199,52 +183,31 @@ class _BottomSheetContentState extends ConsumerState<BottomSheetContent> {
                                 activeColor:
                                     Theme.of(context).colorScheme.primary,
                                 onChanged: (newValue) {
-                                  ref.read(itemProvider.notifier).saveCurrentText(
-                                      index,
-                                      itemTextController
-                                          .text); // Save current text before updating the checkbox state
                                   setState(() {
                                     isChecked = newValue;
                                   });
                                 },
                               ),
                               const Gap(n10),
-                              _isEditing && index == items.length
+                              _isEditing
                                   ? Expanded(
                                       child: BorderlessTextField(
                                         onSubmitted: (value) {
                                           ref
+                                              .read(textProvider.notifier)
+                                              .saveText(
+                                                  itemTextController.text);
+                                          ref
                                               .read(itemProvider.notifier)
-                                              .saveCurrentText(
-                                                  index,
-                                                  itemTextController
-                                                      .text); // Save current text before editing the item
-                                          setState(() {
-                                            ref
-                                                .read(itemProvider.notifier)
-                                                .editItem(index, value);
-                                            _toggleEditing(); // Hide the input field after submitting and edit current item
-                                          });
-                                          //   setState(() {
-                                          //     ref
-                                          //         .read(textProvider.notifier)
-                                          //         .saveText(
-                                          //             itemTextController.text);
-                                          //     ref
-                                          //         .read(itemProvider.notifier)
-                                          //         .addItem(
-                                          //             itemTextController.text);
+                                              .addItem(itemTextController.text);
 
-                                          //     _isEditing = false;
-                                          //   });
+                                          setState(() {
+                                            _isEditing = false;
+                                          });
                                         },
                                         controller: itemTextController,
                                         autofocus: true,
                                         hintText: addItem,
-                                        enabled: _isEditing &&
-                                            index ==
-                                                items.length -
-                                                    1, // Enable only for the last item and when editing current item
                                         hintStyle: getRegularStyle(
                                           color: Theme.of(context)
                                               .colorScheme
@@ -261,11 +224,7 @@ class _BottomSheetContentState extends ConsumerState<BottomSheetContent> {
                                       ),
                                     )
                                   : GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          _toggleEditing();
-                                        });
-                                      },
+                                      onTap: _toggleEditing,
                                       child: Text(
                                         item.text,
                                         style: getRegularStyle(
@@ -286,11 +245,7 @@ class _BottomSheetContentState extends ConsumerState<BottomSheetContent> {
                               value: false,
                               activeColor:
                                   Theme.of(context).colorScheme.primary,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  isChecked = newValue;
-                                });
-                              },
+                              onChanged: (newValue) {},
                             ),
                             const Gap(n10),
                             Expanded(
@@ -298,23 +253,9 @@ class _BottomSheetContentState extends ConsumerState<BottomSheetContent> {
                                 onSubmitted: (value) {
                                   ref
                                       .read(itemProvider.notifier)
-                                      .saveEditedItems(); // Save edited items before adding a new item
-
-                                  // Add the new item to the list and clear the input field
-                                  setState(() {
-                                    ref.read(itemProvider.notifier).addItem(
-                                        NewItemTextController.text, false);
-                                    _toggleEditingNew(); // Hide the add button after adding a new item
-                                    NewItemTextController.clear();
-                                  });
-                                  //   setState(() {
-                                  //     _isEditing = false;
-                                  //     ref
-                                  //         .read(itemProvider.notifier)
-                                  //         .addItem(itemTextController.text);
-                                  //   });
+                                      .addItem(itemTextController.text);
                                 },
-                                controller: NewItemTextController,
+                                controller: itemTextController,
                                 autofocus: true,
                                 hintText: addItem,
                                 hintStyle: getRegularStyle(
@@ -346,126 +287,3 @@ class _BottomSheetContentState extends ConsumerState<BottomSheetContent> {
     );
   }
 }
-
-
-/*
-
-*/
-
-
-/*
-ListView.builder(
-                    controller: scrollController,
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: items.length +
-                        1, // One extra for the new item input field
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      if (index < items.length) {
-                        final item = items[index];
-                        return Row(
-                            textBaseline: TextBaseline.alphabetic,
-                            crossAxisAlignment: CrossAxisAlignment.baseline,
-                            children: [
-                              CustomCheckbox(
-                                value: item.isChecked,
-                                activeColor:
-                                    Theme.of(context).colorScheme.primary,
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    item.isChecked = newValue;
-                                  });
-                                },
-                              ),
-                              const Gap(n10),
-                              _isEditing &&
-                                      index ==
-                                          items.length -
-                                              1 // Show only for the last item
-                                  ? Expanded(
-                                      child: BorderlessTextField(
-                                        onSubmitted: (value) {
-                                          setState(() {
-                                            ref
-                                                .read(itemProvider.notifier)
-                                                .addItem(value);
-                                            _isEditing =
-                                                false; // Hide the input field after submitting
-                                          });
-                                        },
-                                        controller: NewItemTextController,
-                                        autofocus: true,
-                                        hintText: addItem,
-                                        hintStyle: getRegularStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary
-                                              .withOpacity(0.3),
-                                          fontSize: n20,
-                                        ),
-                                        textStyle: getRegularStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primaryContainer,
-                                          fontSize: n20,
-                                        ),
-                                      ),
-                                    )
-                                  : GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          _toggleEditing(); // Show the input field for editing
-                                        });
-                                      },
-                                      child: Text(
-                                        item.text,
-                                        style: getRegularStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primaryContainer,
-                                          fontSize: n20,
-                                        ),
-                                      ),
-                                    ),
-                            ]);
-                      } else {
-                        // For the new item input field
-                        return Row(
-                          textBaseline: TextBaseline.alphabetic,
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          children: [
-                            CustomCheckbox(
-                              value: false,
-                              activeColor:
-                                  Theme.of(context).colorScheme.primary,
-                              onChanged: (newValue) {},
-                            ),
-                            const Gap(n10),
-                            Expanded(
-                              child: BorderlessTextField(
-                                onSubmitted: (value) {
-                                  setState(() {
-                                    ref
-                                        .read(itemProvider.notifier)
-                                        .addItem(value);
-                                    _isEditing =
-                                        false; // Hide the input field after submitting
-                                  });
-                                },
-                                controller: itemTextController,
-                                autofocus: true,
-                                hintText: addItem,
-                                hintStyle: getRegularStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .primaryContainer,
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      }
-                    },
-                  )
-				  */

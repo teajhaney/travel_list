@@ -12,6 +12,7 @@ class ListItem {
 
 //==PROVIDER FOR TEXT===
 // Provider for managing list of texts
+/*
 final textProvider =
     StateNotifierProvider<TextListStateNotifier, List<String>>((ref) {
   return TextListStateNotifier();
@@ -98,9 +99,9 @@ class ItemListStateNotifier extends StateNotifier<List<ListItem>> {
     state = updatedState;
   }
 }
+*/
 
 
-/*
 //==PROVIDER FOR TEXT===
 // Provider for the TextStateNotifier
 
@@ -139,10 +140,4 @@ class ItemListStateNotifier extends StateNotifier<List<ListItem>> {
 
 
 }
-*/
-/* 
-I want to create a model for my list which contains list of strings in form of text and a checkbox, I want to add the model to my
- riverpod provider.
- when the user first open the screen they should see a check box and a text field to add a list<string> when thet click textinput action, I want the itemcontrollertext.text to be added
-to the list and update the UI to automticlly have the Item frommthe list and a new textfield below for the user to add another text.
- */
+
